@@ -72,7 +72,7 @@ TestViewerApplication::Open()
         // create a few point lights
         IndexT lightIndex;
         const SizeT numLights = 1;
-        const float lightRange = 100;
+        const float lightRange = 20;
         for (lightIndex = 0; lightIndex < numLights; lightIndex++)
         {   
             float x = 0;//n_rand() * 60.0f - 20.0f;
@@ -123,76 +123,56 @@ TestViewerApplication::Open()
 
         // setup models        
         this->ground = ModelEntity::Create();
-        this->ground->SetResourceId(ResourceId("mdl:examples/test09.n3"));//dummyground.n3
+        this->ground->SetResourceId(ResourceId("mdl:examples/dummyground.n3"));
         this->ground->SetTransform(matrix44::translation(0.0f, 0.0f, 0.0f));
         this->stage->AttachEntity(ground.cast<GraphicsEntity>());
          
                        
-        //IndexT j;
-        //IndexT i;
-        //bool createStatic = false;
-        //float spacing = 1.5f;
-        //for (j = 0; j < 3; ++j)
-        //{
-        //    for (i = 0; i < 3; ++i)
-        //    {
-        //        Ptr<ModelEntity> model = ModelEntity::Create();
-        //        float dir = (i % 2 ? -1.0f : 1.0f);
-        //        float x = (i+1) * spacing * dir - dir * 0.5f * spacing;
-        //        model->SetTransform(matrix44::translation(x, 0.0, 2.0f * spacing * j));
-        //        if (createStatic)
-        //        {                                                                   
-        //            model->SetResourceId(ResourceId("mdl:examples/tiger.n3"));  
-        //            this->stage->AttachEntity(model.cast<GraphicsEntity>());
-        //        }
-        //        else
-        //        {                                                             
-        //            model->SetResourceId(ResourceId("mdl:characters/mensch_m.n3"));
-        //            this->stage->AttachEntity(model.cast<GraphicsEntity>());
-        //        
-        //            // apply skin
-        //            Ptr<Graphics::ApplySkinList> skinList = Graphics::ApplySkinList::Create();
-        //            skinList->SetSkinList(StringAtom("mann_nackt"));
-        //            model->SendMsg(skinList.cast<GraphicsEntityMessage>());
+        IndexT j;
+        IndexT i;
+        bool createStatic = false;
+        float spacing = 1.5f;
+        for (j = 0; j < 3; ++j)
+        {
+            for (i = 0; i < 3; ++i)
+            {
+                Ptr<ModelEntity> model = ModelEntity::Create();
+                float dir = (i % 2 ? -1.0f : 1.0f);
+                float x = (i+1) * spacing * dir - dir * 0.5f * spacing;
+                model->SetTransform(matrix44::translation(x, 0.0, 2.0f * spacing * j));
+                if (createStatic)
+                {                                                                   
+                    model->SetResourceId(ResourceId("mdl:examples/tiger.n3"));  
+                    this->stage->AttachEntity(model.cast<GraphicsEntity>());
+                }
+                else
+                {                                                             
+                    model->SetResourceId(ResourceId("mdl:characters/mensch_m.n3"));
+                    this->stage->AttachEntity(model.cast<GraphicsEntity>());
+                
+                    // apply skin
+                    Ptr<Graphics::ApplySkinList> skinList = Graphics::ApplySkinList::Create();
+                    skinList->SetSkinList(StringAtom("mann_nackt"));
+                    model->SendMsg(skinList.cast<GraphicsEntityMessage>());
       
-        //            // play animation
-        //            Ptr<Graphics::AnimPlayClip> playClip = Graphics::AnimPlayClip::Create();
-        //            playClip->SetClipName("gehen_01");
-        //            playClip->SetTrackIndex(0);
-        //            playClip->SetLoopCount(1.0f);
-        //            model->SendMsg(playClip.cast<GraphicsEntityMessage>());
-        //        } 
-        //        // createStatic  = !createStatic;
-        //        this->models.Append(model);  
-        //    } 
-        //}   
+                    // play animation
+                    Ptr<Graphics::AnimPlayClip> playClip = Graphics::AnimPlayClip::Create();
+                    playClip->SetClipName("gehen_01");
+                    playClip->SetTrackIndex(0);
+                    playClip->SetLoopCount(1.0f);
+                    model->SendMsg(playClip.cast<GraphicsEntityMessage>());
+                } 
+                // createStatic  = !createStatic;
+                this->models.Append(model);  
+            } 
+        }   
                                 
         // add shader test scene
         //Ptr<ModelEntity> model = ModelEntity::Create();
-        //model->SetTransform(matrix44::translation(2.0f, 1.0, 2.0f));                                                              
+        //model->SetTransform(matrix44::translation(2.0f * i, 0.0, 2.0f * j));                                                              
         //model->SetResourceId(ResourceId("mdl:examples/psys2_testarea.n3"));  
         //this->stage->AttachEntity(model.cast<GraphicsEntity>());   
         //this->models.Append(model);  
-
-		Ptr<ModelEntity> model = ModelEntity::Create();
-		model->SetTransform(matrix44::translation(2.0f, 0.0, 2.0f));       
-        model->SetResourceId(ResourceId("mdl:characters/mensch_m.n3"));
-        this->stage->AttachEntity(model.cast<GraphicsEntity>());
-    
-        // apply skin
-        Ptr<Graphics::ApplySkinList> skinList = Graphics::ApplySkinList::Create();
-        skinList->SetSkinList(StringAtom("mann_nackt"));
-        model->SendMsg(skinList.cast<GraphicsEntityMessage>());
-
-        // play animation
-        Ptr<Graphics::AnimPlayClip> playClip = Graphics::AnimPlayClip::Create();
-        playClip->SetClipName("gehen_01");
-        playClip->SetTrackIndex(0);
-        playClip->SetLoopCount(100.0f);
-		//playClip->SetFadeOutTime(2000);
-		//playClip->SetEnqueueMode(Animation::AnimJobEnqueueMode::IgnoreIfSameClipActive);
-        model->SendMsg(playClip.cast<GraphicsEntityMessage>());
-		this->models.Append(model);  
         
         // setup frame capture render module
         Ptr<FrameCaptureRenderModule> module = FrameCaptureRenderModule::Create();
@@ -544,7 +524,7 @@ TestViewerApplication::AppendTestModel()
 {              
     IndexT j;
     IndexT i;
-    bool createStatic = false;
+    bool createStatic = true;
     float spacing = 5.0f;
     for (j = 0; j < 4; ++j)
     {

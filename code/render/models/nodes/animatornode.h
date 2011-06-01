@@ -95,6 +95,11 @@ public:
     /// get number of animation sections
     SizeT GetNumAnimSections() const;
 
+#if NEBULA3_EDITOR
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
+
 private:
     /// load animation resource
     bool LoadAnimation();
@@ -121,6 +126,10 @@ private:
         AnimLoopType::Type loopType;
         CoreGraphics::ShaderVariable::Semantic shaderVarSemantic;
         Ptr<CoreAnimation::ManagedAnimResource> managedAnimResource;
+
+#if NEBULA3_EDITOR
+		bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
     };
 
     Util::Array<AnimSection> animSection;

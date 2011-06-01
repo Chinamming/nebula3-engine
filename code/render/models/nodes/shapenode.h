@@ -38,6 +38,11 @@ public:
     virtual Resources::Resource::State GetResourceState() const;
     /// apply state shared by all my ModelNodeInstances
     virtual void ApplySharedState(IndexT frameIndex);
+
+#if NEBULA3_EDITOR
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
 	
     /// set mesh resource id
     void SetMeshResourceId(const Resources::ResourceId& resId);

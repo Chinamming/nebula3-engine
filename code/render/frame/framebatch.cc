@@ -123,7 +123,7 @@ FrameBatch::RenderBatch()
     }
     else if (BatchType::Shapes == this->batchType)
     {
-        ShapeRenderer::Instance()->DrawShapes();
+        ShapeRenderer::Instance()->DrawShapes();		
     }
     else if (BatchType::Text == this->batchType)
     {

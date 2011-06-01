@@ -40,13 +40,6 @@ ModelInstance::Setup(const Ptr<Model>& m, const Ptr<ModelNode>& rootNode)
     this->model = m;
 
     // create node instances
-	//IndexT i;
-	//const Util::Array<Ptr<ModelNode> >& nodes = m->GetNodes();
-	//for (i = 0; i < nodes.Size(); i++)
-	//{
-	//	ModelNode* node = nodes[i];
-	//	node->CreateNodeInstanceHierarchy(this);
-	//}
     rootNode->CreateNodeInstanceHierarchy(this);
 }
 

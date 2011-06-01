@@ -9,6 +9,7 @@
    
     (C) 2009 Radon Labs GmbH
 */
+#include "core/types.h"
 
 #define JOBFUNCCONTEXT_MAXINPUTS 4
 #define JOBFUNCCONTEXT_MAXUNIFORMS 2

@@ -8,7 +8,6 @@
     (C) 2006 Radon Labs GmbH
 */
 #include "core/types.h"
-#include <intrin.h>
 
 //------------------------------------------------------------------------------
 namespace Win360

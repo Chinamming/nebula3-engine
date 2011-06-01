@@ -48,7 +48,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions=""
 				Optimization="0"
-				AdditionalIncludeDirectories="..;../foundation;../render;../extlibs;../tools;../addons ;"
+				AdditionalIncludeDirectories="..;../foundation;../render;../extlibs;../tools;../addons;../extlibs/bullet/src"
 				PreprocessorDefinitions="__WIN32__;WIN32;_DEBUG;NT_PLUGIN;_HAS_EXCEPTIONS=0;"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -84,11 +84,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
+				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib libbulletcollision_d.lib libbulletdynamics_d.lib libbulletmath_d.lib libbulletmultithreaded_d.lib libspudispatchD.lib"
 				OutputFile="..\..\bin\win32\testviewer.debug.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".\Win32\Debug,..\..\bin\win32,..\lib\win32_vc9_i386;"
+				AdditionalLibraryDirectories=".\Win32\Debug;..\..\bin\win32;..\lib\win32_vc9_i386;..\..\lib\bullet\win32"
 				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testviewer.debug.pdb"
@@ -739,23 +739,34 @@
 	</References>
 	<Files>
 		<Filter
-			Name="testviewer"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc"
+			Name="bulletApp"
 			>
 			<File
-				RelativePath="..\res\nebula.rc"
+				RelativePath="..\tests\bullet_dynamics_simple\bdapplication.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\tools\testviewer\testviewer.cc"
+				RelativePath="..\tests\bullet_dynamics_simple\bdapplication.h"
 				>
 			</File>
 			<File
-				RelativePath="..\tools\testviewer\testviewerapplication.cc"
+				RelativePath="..\tests\bullet_dynamics_simple\bdsimple.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\tools\testviewer\testviewerapplication.h"
+				RelativePath="..\tests\bullet_dynamics_simple\bulletnebulaconversion.h"
+				>
+			</File>
+			<File
+				RelativePath="..\tests\bullet_dynamics_simple\debugdrawer.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\tests\bullet_dynamics_simple\debugdrawer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\tests\bullet_dynamics_simple\nebulamotionstate.h"
 				>
 			</File>
 		</Filter>

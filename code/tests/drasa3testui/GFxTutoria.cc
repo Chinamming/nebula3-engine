@@ -2,12 +2,20 @@
 #include "GFxTutorial.h"
 #include "coregraphics/displaydevice.h"
 #include "coregraphics/renderdevice.h"
+#include "framesync/framesynctimer.h"
+#include "math/quaternion.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/inputserver.h"
 
 //--------------------------------------------------------------------------------------
 // GFxTutorial Implementation
 //--------------------------------------------------------------------------------------
-//__ImplementClass(GFxTutorial, 'GFTL', Core::RefCounted);
+namespace ScaleForms
+{
 using namespace CoreGraphics;
+
+__ImplementClass(GFxTutorial, 'GFTL', Core::RefCounted);
 
 #define UIMOVIE_FILENAME "d3d9guide.swf"
 
@@ -65,7 +73,7 @@ bool GFxTutorial::InitGFx()
 	pUIMovie->Advance(0.0f, 0);
 
 	// Note the time to determine the amount of time elapsed between this frame and the next
-	MovieLastTime = timeGetTime();
+	MovieLastTime = timeGetTime();//FrameSync::FrameSyncTimer::Instance()->GetFrameTime();
 
 	// Set the background stage color to alpha blend with the underlying 3D environment
 	pUIMovie->SetBackgroundAlpha(0.0f);
@@ -110,94 +118,47 @@ void GFxTutorial::StorePresentParameters(D3DPRESENT_PARAMETERS p)
 
 void GFxTutorial::AdvanceAndRender(void)
 {
+	//double mtime = FrameSync::FrameSyncTimer::Instance()->GetFrameTime();
+	//double deltaTime = ((double)(mtime - MovieLastTime)) / 1000.0f;
+	//MovieLastTime = mtime;
+
 	DWORD mtime = timeGetTime();
 	float deltaTime = ((float)(mtime - MovieLastTime)) / 1000.0f;
 	MovieLastTime = mtime;
 
-	pUIMovie->Advance(deltaTime, 0);
+	pUIMovie->Advance((float)deltaTime, 0);
 	pUIMovie->Display();
 }
 
-void ProcessKeyEvent(GFxMovieView *pMovie, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-void GFxTutorial::ProcessEvent(const GFxEvent& mevent)
+void GFxTutorial::ProcessEvent(const GFxMouseEvent& mevent)
 {
 	if(pUIMovie)
 	{
-		pUIMovie->HandleEvent(mevent);
-	}
-}
-
-void GFxTutorial::ProcessEvent(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool *pbNoFurtherProcessing)
-{
-	int mx = LOWORD(lParam), my = HIWORD(lParam);
-
-	//if(pHUDMovie && uMsg == WM_KEYDOWN)
-	//{
-	//	if(wParam == VK_F5)
-	//	{
-	//		int counter = (int)pHUDMovie->GetVariableDouble("_root.counter");
-	//		counter++;
-	//		pHUDMovie->SetVariable("_root.counter", GFxValue((double)counter));
-	//		char str[256];
-	//		sprintf_s(str, "testing! ctr = %d", counter);
-	//		pHUDMovie->SetVariable("_root.MessageText.text", str);
-	//	}
-	//}
-
-	if(pUIMovie)
-	{
-		if(uMsg == WM_KEYDOWN)
-		{
-			if(wParam == VK_F6)
-			{
-				const char *retval = pUIMovie->Invoke("_root.OpenMeshPath", "");
-				//GFxPrintf("_root.OpenMeshPath returns '%s'\n", retval);
-			}
-			else if(wParam == VK_F7)
-			{
-				const char *retval = pUIMovie->Invoke("_root.CloseMeshPath", "");
-				//GFxPrintf("_root.CloseMeshPath returns '%s'\n", retval);
-			}
-		}
-
 		bool processedMouseEvent = false;
-		if(uMsg == WM_MOUSEMOVE)
+		if( mevent.Type == GFxMouseEvent::MouseMove)
 		{
-			GFxMouseEvent mevent(GFxEvent::MouseMove, 0, (Float)mx, (Float)my);
-			pUIMovie->HandleEvent(mevent);
-			processedMouseEvent = true;
-		}
-		else if(uMsg == WM_LBUTTONDOWN)
-		{
-			::SetCapture(hWnd);
-			GFxMouseEvent mevent(GFxEvent::MouseDown, 0, (Float)mx, (Float)my);
-			pUIMovie->HandleEvent(mevent);
-			processedMouseEvent = true;
-		}
-		else if(uMsg == WM_LBUTTONUP)
-		{
-			::ReleaseCapture();
-			GFxMouseEvent mevent(GFxEvent::MouseUp, 0, (Float)mx, (Float)my);
 			pUIMovie->HandleEvent(mevent);
 			processedMouseEvent = true;
 		}
 
-		if(processedMouseEvent && pUIMovie->HitTest((Float)mx, (Float)my, GFxMovieView::HitTest_Shapes))
-			*pbNoFurtherProcessing = true;
-
-		if(uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP ||
-			uMsg == WM_KEYDOWN || uMsg == WM_KEYUP ||
-			uMsg == WM_CHAR)
-		{
-			if(textboxHasFocus || wParam == 32 || wParam == 9)
-			{
-				ProcessKeyEvent(pUIMovie, uMsg, wParam, lParam);
-				*pbNoFurtherProcessing = true;
-			}
+		HWND hWnd = DisplayDevice::Instance()->GetHwnd();
+		if( mevent.Type == GFxMouseEvent::MouseDown)
+		{	
+			pUIMovie->HandleEvent(mevent);
+			processedMouseEvent = true;
 		}
+
+		if( mevent.Type == GFxMouseEvent::MouseUp)
+		{
+			//::ReleaseCapture();
+			pUIMovie->HandleEvent(mevent);
+			processedMouseEvent = true;
+		}
+		if( processedMouseEvent )
+			pUIMovie->HitTest((Float)mevent.x, (Float)mevent.y, GFxMovieView::HitTest_Shapes);		
 	}
 }
+
 
 void GFxTutorial::LogPrintf(const char *format, va_list al)
 {
@@ -381,4 +342,5 @@ void ProcessKeyEvent(GFxMovieView *pMovie, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	bool downFlag = (uMsg == WM_KEYDOWN || uMsg == WM_SYSKEYDOWN) ? 1 : 0;
 	OnKey(pMovie, kc, asciiCode, 0, GetModifiers(), downFlag);
+}
 }

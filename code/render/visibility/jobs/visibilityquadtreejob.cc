@@ -2,6 +2,7 @@
 //  charevalskeletonjob.cc
 //  (C) 2009 Radon Labs GmbH
 //------------------------------------------------------------------------------
+#include "stdneb.h"
 #include "jobs/stdjob.h"
 #include "math/float4.h"
 #include "math/matrix44.h"

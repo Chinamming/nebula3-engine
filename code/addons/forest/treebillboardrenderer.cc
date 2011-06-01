@@ -202,81 +202,81 @@ TreeBillboardRenderer::UpdateDyanmicMesh()
         const Ptr<Tree>& tree = treeInst->GetTree();
     }
 
-    /*
-    float* vertices = this->refMesh->LockVertices(nMesh2::LockDiscard);
-    ushort* indices = this->refMesh->LockIndices(nMesh2::LockDiscard);
-    float* dstVertexPtr = vertices;
-    ushort* dstIndexPtr = indices;
-    ushort dstVertexIndex = 0;
-    IndexT dstIndexIndex = 0;
+    
+    //float* vertices = this->refMesh->LockVertices(nMesh2::LockDiscard);
+    //ushort* indices = this->refMesh->LockIndices(nMesh2::LockDiscard);
+    //float* dstVertexPtr = vertices;
+    //ushort* dstIndexPtr = indices;
+    //ushort dstVertexIndex = 0;
+    //IndexT dstIndexIndex = 0;
 
-    IndexT treeIndex;
-    for (treeIndex = 0; treeIndex < this->treeInstances.Size(); treeIndex++)
-    {
-        TreeInstance* treeInst = this->treeInstances[treeIndex].Value();
-        const Ptr<Tree>& tree = treeInst->GetTree();
+    //IndexT treeIndex;
+    //for (treeIndex = 0; treeIndex < this->treeInstances.Size(); treeIndex++)
+    //{
+    //    TreeInstance* treeInst = this->treeInstances[treeIndex].Value();
+    //    const Ptr<Tree>& tree = treeInst->GetTree();
 
-        // get world transform, lod index and fade alpha value from the tree instance
-        const matrix44& tform = treeInst->GetTransform();
-        IndexT lodIndex;
-        float fadeAlpha, bbScale;
-        treeInst->GetBillboardData(lodIndex, fadeAlpha, bbScale);
-        n_assert(InvalidIndex != lodIndex);
+    //    // get world transform, lod index and fade alpha value from the tree instance
+    //    const matrix44& tform = treeInst->GetTransform();
+    //    IndexT lodIndex;
+    //    float fadeAlpha, bbScale;
+    //    treeInst->GetBillboardData(lodIndex, fadeAlpha, bbScale);
+    //    n_assert(InvalidIndex != lodIndex);
 
-        // get the right TreeLOD object
-        const Ptr<TreeLOD>& treeLod = tree->GetLODs()[lodIndex];
+    //    // get the right TreeLOD object
+    //    const Ptr<TreeLOD>& treeLod = tree->GetLODs()[lodIndex];
 
-        // update the per-instance data, so that we can simply
-        // copy over a chunk of vertices into our dynamic vertex buffer
-        SizeT srcNumVertices = treeLod->GetNumVertices();
-        SizeT srcVertexWidth = treeLod->GetVertexWidth();
-        const float* srcVertexPtr  = treeLod->GetVertices();
-        SizeT vertexChunkSize = srcNumVertices * srcVertexWidth * sizeof(float);
-        treeLod->UpdateInstanceData(treeInst->GetTransform(), fadeAlpha, bbScale);
-                
-        // copy over the vertex data
-        n_assert((dstVertexIndex + srcNumVertices) < MaxNumVertices);
-        Memory::Copy(srcVertexPtr, dstVertexPtr, vertexChunkSize);
+    //    // update the per-instance data, so that we can simply
+    //    // copy over a chunk of vertices into our dynamic vertex buffer
+    //    SizeT srcNumVertices = treeLod->GetNumVertices();
+    //    SizeT srcVertexWidth = treeLod->GetVertexWidth();
+    //    const float* srcVertexPtr  = treeLod->GetVertices();
+    //    SizeT vertexChunkSize = srcNumVertices * srcVertexWidth * sizeof(float);
+    //    treeLod->UpdateInstanceData(treeInst->GetTransform(), fadeAlpha, bbScale);
+    //            
+    //    // copy over the vertex data
+    //    n_assert((dstVertexIndex + srcNumVertices) < MaxNumVertices);
+    //    Memory::Copy(srcVertexPtr, dstVertexPtr, vertexChunkSize);
 
-        // copy over index data, add vertex base index
-        SizeT srcNumIndices = treeLod->GetNumIndices();
-        const ushort* srcIndexPtr = treeLod->GetIndices();
-        IndexT i;
-        for (i = 0; i < srcNumIndices; i++)
-        {
-            *dstIndexPtr = *srcIndexPtr + dstVertexIndex;
-            dstIndexPtr++;
-            srcIndexPtr++;
-        }
+    //    // copy over index data, add vertex base index
+    //    SizeT srcNumIndices = treeLod->GetNumIndices();
+    //    const ushort* srcIndexPtr = treeLod->GetIndices();
+    //    IndexT i;
+    //    for (i = 0; i < srcNumIndices; i++)
+    //    {
+    //        *dstIndexPtr = *srcIndexPtr + dstVertexIndex;
+    //        dstIndexPtr++;
+    //        srcIndexPtr++;
+    //    }
 
-        // update destination pointers and index trackers
-        dstVertexPtr += srcNumVertices * srcVertexWidth;
-        dstVertexIndex += srcNumVertices;
-        dstIndexIndex  += srcNumIndices;
-    }
-    this->refMesh->UnlockVertices();
-    this->refMesh->UnlockIndices();
+    //    // update destination pointers and index trackers
+    //    dstVertexPtr += srcNumVertices * srcVertexWidth;
+    //    dstVertexIndex += srcNumVertices;
+    //    dstIndexIndex  += srcNumIndices;
+    //}
+    //this->refMesh->UnlockVertices();
+    //this->refMesh->UnlockIndices();
 
-    // setup the shape node of the first tree instance for rendering 
-    // the entire billboard set
-    nShapeNode* shapeNode = this->treeInstances[0].Value()->GetTree()->GetBillboardLOD()->GetBillboardShapeNode();
-    nMeshGroup& meshGroup = this->refMesh->Group(0);
-    meshGroup.SetFirstVertex(0);
-    meshGroup.SetFirstIndex(0);
-    meshGroup.SetNumVertices(dstVertexIndex);
-    meshGroup.SetNumIndices(dstIndexIndex);
-    shapeNode->SetGroupIndex(0);           
-    shapeNode->SetMeshObject(this->refMesh.get());
+    //// setup the shape node of the first tree instance for rendering 
+    //// the entire billboard set
+    //nShapeNode* shapeNode = this->treeInstances[0].Value()->GetTree()->GetBillboardLOD()->GetBillboardShapeNode();
+    //nMeshGroup& meshGroup = this->refMesh->Group(0);
+    //meshGroup.SetFirstVertex(0);
+    //meshGroup.SetFirstIndex(0);
+    //meshGroup.SetNumVertices(dstVertexIndex);
+    //meshGroup.SetNumIndices(dstIndexIndex);
+    //shapeNode->SetGroupIndex(0);           
+    //shapeNode->SetMeshObject(this->refMesh.get());
 
-    this->renderContext.ClearLinks();
-    this->renderContext.SetRootNode(shapeNode);
-    this->renderContext.SetFrameId(MGraphics::Server::Instance()->GetFrameId());
-    if (this->lightLinkRenderContext)
-    {
-        this->renderContext.AddLink(this->lightLinkRenderContext);
-    }
-    this->renderContext.SetFlag(nRenderContext::DoOcclusionQuery, false);
-    */
+    //this->renderContext.ClearLinks();
+    //this->renderContext.SetRootNode(shapeNode);
+    //this->renderContext.SetFrameId(MGraphics::Server::Instance()->GetFrameId());
+    //if (this->lightLinkRenderContext)
+    //{
+    //    this->renderContext.AddLink(this->lightLinkRenderContext);
+    //}
+    //this->renderContext.SetFlag(nRenderContext::DoOcclusionQuery, false);
+    
 }
 
 //------------------------------------------------------------------------------

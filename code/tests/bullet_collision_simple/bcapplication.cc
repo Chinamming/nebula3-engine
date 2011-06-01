@@ -259,8 +259,8 @@ BCApplication::Open()
                     model->SendMsg(skinList.cast<GraphicsEntityMessage>());
 
                     // play animation
-                    Ptr<Graphics::AnimPlayLoop> playLoop = Graphics::AnimPlayLoop::Create();
-                    playLoop->SetBlendPriority(0);
+                    Ptr<Graphics::AnimPlayClip> playLoop = Graphics::AnimPlayClip::Create();
+                    //playLoop->SetBlendPriority(0);
                     playLoop->SetBlendWeight(1.0f);
                     playLoop->SetTimeFactor(1.0f);
                     playLoop->SetStartTime(0);
@@ -593,7 +593,7 @@ void
 BCApplication::OnConfigureDisplay()
 {
     ViewerApplication::OnConfigureDisplay();
-    this->display->SetVerticalSyncEnabled(true);
+    this->display->Settings().SetVerticalSyncEnabled(true);
 }
 
 //------------------------------------------------------------------------------

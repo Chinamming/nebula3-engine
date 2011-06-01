@@ -81,7 +81,7 @@ struct Nax2Group
     float keyTime;
     float fadeInFrames;
     int loopType;
-    //char metaData[512];
+    char metaData[512];
 };
 
 struct Nax2Curve

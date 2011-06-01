@@ -19,6 +19,7 @@
 #include "models/visresolvecontainer.h"
 #include "math/bbox.h"
 #include "io/binaryreader.h"
+#include "models/modelwriter.h"
 
 //------------------------------------------------------------------------------
 namespace Models
@@ -109,6 +110,11 @@ public:
     const Util::StringAtom& GetStringAttr(const Util::StringAtom& attrId) const;
     /// add string attribute
     void SetStringAttr(const Util::StringAtom& attrId, const Util::StringAtom& value);
+
+#if NEBULA3_EDITOR
+	/// write data to stream,add by Dengwenyi
+	virtual bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
 
 protected:
     /// recursively create node instance hierarchy

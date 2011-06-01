@@ -14,8 +14,10 @@
 #include "ui/uirenderer.h"
 #include "ui/uirendermodule.h"
 #include "ui/uimanager.h"
+
 #include "GFxTutorial.h"
 #include "GfxRendermodule.h"
+#include "GfXRender.h"
 
 //------------------------------------------------------------------------------
 namespace Test
@@ -59,8 +61,10 @@ private:
     float rotX;
 
     // client side stuff
+    Ptr<UI::UIManager> uiManager;
+    Ptr<UI::UIRenderer> uiRenderer;
     // connection to render thread
-    //Ptr<UI::UIRenderModule> uiRenderModule;
+    Ptr<UI::UIRenderModule> uiRenderModule;
 
     Ptr<UI::MainScreen> mainWindow;
 

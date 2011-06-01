@@ -42,7 +42,7 @@ GfxRTPlugin::OnRegister()
     n_assert(!this->gfxRender.isvalid());
 
     // setup the render-thread SUIServer
-    this->gfxRender = GfxRender::Create();
+	this->gfxRender = GfxRender::Create();
     this->gfxRender->Setup();
     
     // setup the SUI message handler

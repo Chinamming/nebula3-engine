@@ -188,8 +188,8 @@ BDApplication::Open()
                     model->SendMsg(skinList.cast<GraphicsEntityMessage>());
 
                     // play animation
-                    Ptr<Graphics::AnimPlayLoop> playLoop = Graphics::AnimPlayLoop::Create();
-                    playLoop->SetBlendPriority(0);
+                    Ptr<Graphics::AnimPlayClip> playLoop = Graphics::AnimPlayClip::Create();
+                    //playLoop->SetBlendPriority(0);
                     playLoop->SetBlendWeight(1.0f);
                     playLoop->SetTimeFactor(1.0f);
                     playLoop->SetStartTime(0);
@@ -269,7 +269,7 @@ BDApplication::GetNextTransform(int index) const
 {
     btTransform ret;
     btMatrix3x3 m3x3;
-    m3x3.setEulerYPR(index / 5, index % 5, 0.0f);
+    m3x3.setEulerYPR((btScalar)(index / 5), (btScalar)(index % 5), 0.0f);
     ret.setBasis(m3x3);
     const btVector3 pos(-10.0f + ((index % BOX_COUNT_PER_ROW) * 2.5f), 
                         5.0f + ((index / BOX_COUNT_PER_ROW) * 2.5f),
@@ -435,8 +435,8 @@ BDApplication::InitPhysicsObjects()
         		//btVector3 pivotInA(this->objectHalfWidth + 0.4, 0.0f, 0.0f);
                 //btVector3 pivotInB(-this->objectHalfWidth - 0.4, 0.0f, 0.0f);
 
-        		btVector3 pivotInA(this->objectHalfWidth + 0.1, 0.0f, 0.0f);
-                btVector3 pivotInB(-this->objectHalfWidth - 0.1, 0.0f, 0.0f);
+        		btVector3 pivotInA(this->objectHalfWidth + 0.1f, 0.0f, 0.0f);
+                btVector3 pivotInB(-this->objectHalfWidth - 0.1f, 0.0f, 0.0f);
 
         		//////btVector3 pivotInA(this->objectHalfWidth + 1.0, 0.0f, 0.0f);
                 //////btVector3 pivotInB(this->objectHalfWidth + 1.0, 0.0f, 0.0f);
@@ -619,7 +619,7 @@ void
 BDApplication::OnConfigureDisplay()
 {
     ViewerApplication::OnConfigureDisplay();
-    this->display->SetVerticalSyncEnabled(true);
+    this->display->Settings().SetVerticalSyncEnabled(true);
 }
 
 //------------------------------------------------------------------------------
@@ -646,6 +646,24 @@ BDApplication::OnProcessInput()
         // reset to start pos
         this->mayaCameraUtil.Reset();
     }
+	else if (kbd->KeyDown(Key::A))
+	{
+		this->ShootBox();
+	}
+	else if ( kbd->KeyDown(Key::B))
+	{
+		this->blnSimulationRunning = !this->blnSimulationRunning;
+	}
+	else if ( kbd->KeyDown(Key::Space))
+	{
+		this->ResetBodies();
+	}
+	else if ( kbd->KeyDown(Key::D))
+	{
+		this->DestroyPhysicsObjects();
+		this->DestroyPhysicsWorld();
+	}
+
 
     const Ptr<GamePad>& gamePad = inputServer->GetDefaultGamePad(0);
     if (gamePad->IsConnected())
@@ -855,7 +873,7 @@ BDApplication::OnUpdateFrame()
     Timing::Time delta_t = this->GetFrameTime();
     if(delta_t > 0.0f && this->blnSimulationRunning)
     {
-        this->physics.dynamicsWorld->stepSimulation(delta_t, 10000);
+        this->physics.dynamicsWorld->stepSimulation((btScalar)delta_t, 10000);
 
 #ifndef BT_NO_PROFILE
 	    {

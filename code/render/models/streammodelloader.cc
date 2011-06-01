@@ -141,22 +141,75 @@ StreamModelLoader::OnPending()
 bool
 StreamModelLoader::SetupModelFromStream(const Ptr<Stream>& stream)
 {
-	n_assert(stream.isvalid());
-	n_assert(this->resource.isvalid());
-	String resIdExt = this->resource->GetResourceId().AsString().GetFileExtension();
-	if (resIdExt == "n3")
-	{
-		return this->SetupMeshFromN3(stream);
-	}
-	else if (resIdExt == "dae")
-	{
-		return this->SetupMeshFromDae(stream);
-	}
-	else
-	{
-		n_error("StreamModelLoader::SetupModelFromStream(): unrecognized file extension in '%s'\n", this->resource->GetResourceId().Value());
-		return false;
-	}
+    n_assert(stream.isvalid());
+    n_assert(stream->CanBeMapped());
+    n_assert(this->modelNodeStack.IsEmpty());
+
+    const Ptr<Model>& model = this->resource.downcast<Model>();
+
+    // create a binary reader to parse the N3 file
+    // @todo: map stream to memory for faster loading!
+    Ptr<BinaryReader> reader = BinaryReader::Create();
+    reader->SetStream(stream);
+    if (reader->Open())
+    {
+        // make sure it really it's actually an n3 file and check the version
+        // also, we assume that the file has host-native endianess (that's
+        // ensured by the asset tools)
+        FourCC magic = reader->ReadUInt();
+        uint version = reader->ReadUInt();
+        if (magic != FourCC('NEB3'))
+        {
+            n_error("StreamModelLoader: '%s' is not a N3 binary file!", stream->GetURI().AsString().AsCharPtr());
+            return false;
+        }
+        if (version != 1)
+        {
+            n_error("StreamModelLoader: '%s' has wrong version!", stream->GetURI().AsString().AsCharPtr());
+            return false;
+        }
+
+        // start reading tags
+        bool done = false;
+        while ((!stream->Eof()) && (!done))
+        {
+            FourCC fourCC = reader->ReadUInt();
+            if (fourCC == FourCC('>MDL'))
+            {
+                // start of Model
+                FourCC classFourCC = reader->ReadUInt();
+                String name = reader->ReadString();
+                n_assert(model->IsInstanceOf(classFourCC));
+            }
+            else if (fourCC == FourCC('<MDL'))
+            {
+                // end of Model
+                done = true;
+                model->LoadResources();
+                model->UpdateBoundingBox();
+            }
+            else if (fourCC == FourCC('>MND'))
+            {
+                // start of a ModelNode
+                FourCC classFourCC = reader->ReadUInt();
+                String name = reader->ReadString();
+                this->BeginModelNode(model, classFourCC, name);
+            }
+            else if (fourCC == FourCC('<MND'))
+            {
+                // end of current ModelNode
+                this->EndModelNode();
+            }
+            else
+            {
+                // a data tag, let current model node parse the data
+                this->modelNodeStack.Peek()->ParseDataTag(fourCC, reader);
+            }
+        }
+        reader->Close();
+    }
+    n_assert(this->modelNodeStack.IsEmpty());
+    return true;
 }
 
 //------------------------------------------------------------------------------
@@ -201,97 +254,6 @@ StreamModelLoader::EndModelNode()
     n_assert(!this->modelNodeStack.IsEmpty());
     Ptr<ModelNode> modelNode = this->modelNodeStack.Pop();
     modelNode->EndParseDataTags();
-}
-
-//------------------------------------------------------------------------------
-/**
-*/
-bool
-StreamModelLoader::SetupMeshFromN3(const Ptr<Stream>& stream)
-{
-	n_assert(stream.isvalid());
-	n_assert(stream->CanBeMapped());
-	n_assert(this->modelNodeStack.IsEmpty());
-
-	const Ptr<Model>& model = this->resource.downcast<Model>();
-
-	// create a binary reader to parse the N3 file
-	// @todo: map stream to memory for faster loading!
-	Ptr<BinaryReader> reader = BinaryReader::Create();
-	reader->SetStream(stream);
-	if (reader->Open())
-	{
-		// make sure it really it's actually an n3 file and check the version
-		// also, we assume that the file has host-native endianess (that's
-		// ensured by the asset tools)
-		FourCC magic = reader->ReadUInt();
-		uint version = reader->ReadUInt();
-		if (magic != FourCC('NEB3'))
-		{
-			n_error("StreamModelLoader: '%s' is not a N3 binary file!", stream->GetURI().AsString().AsCharPtr());
-			return false;
-		}
-		if (version != 1)
-		{
-			n_error("StreamModelLoader: '%s' has wrong version!", stream->GetURI().AsString().AsCharPtr());
-			return false;
-		}
-
-		// start reading tags
-		bool done = false;
-		while ((!stream->Eof()) && (!done))
-		{
-			FourCC fourCC = reader->ReadUInt();
-			if (fourCC == FourCC('>MDL'))
-			{
-				// start of Model
-				FourCC classFourCC = reader->ReadUInt();
-				String name = reader->ReadString();
-				n_assert(model->IsInstanceOf(classFourCC));
-			}
-			else if (fourCC == FourCC('<MDL'))
-			{
-				// end of Model
-				done = true;
-				model->LoadResources();
-				model->UpdateBoundingBox();
-			}
-			else if (fourCC == FourCC('>MND'))
-			{
-				// start of a ModelNode
-				FourCC classFourCC = reader->ReadUInt();
-				String name = reader->ReadString();
-				this->BeginModelNode(model, classFourCC, name);
-			}
-			else if (fourCC == FourCC('<MND'))
-			{
-				// end of current ModelNode
-				this->EndModelNode();
-			}
-			else
-			{
-				// a data tag, let current model node parse the data
-				this->modelNodeStack.Peek()->ParseDataTag(fourCC, reader);
-			}
-		}
-		reader->Close();
-	}
-	n_assert(this->modelNodeStack.IsEmpty());
-	return true;
-}
-
-//------------------------------------------------------------------------------
-/**
-*/
-bool
-StreamModelLoader::SetupMeshFromDae(const Ptr<Stream>& stream)
-{
-	n_assert(stream.isvalid());
-	n_assert(stream->CanBeMapped());
-	n_assert(this->modelNodeStack.IsEmpty());
-
-	const Ptr<Model>& model = this->resource.downcast<Model>();
-	return true;
 }
 
 } // namespace Models

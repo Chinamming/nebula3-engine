@@ -88,7 +88,7 @@ Window::OnOpen()
     {
         n_assert(this->resourceName.IsValid());
         String extRes;
-        extRes.Format("%s", this->resourceName.Value());
+        extRes.Format("%s.xml", this->resourceName.Value());
         UIManager::Instance()->LoadWindow(Ptr<Window>(this), extRes);        
     }
 

@@ -146,4 +146,27 @@ ShapeNode::ApplySharedState(IndexT frameIndex)
     // to our managed mesh!
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool
+ShapeNode::WriteDataTag(Ptr<ModelWriter>& writer)
+{
+	if(StateNode::WriteDataTag(writer))
+	{
+		writer->BeginTag("Mesh", FourCC('MESH'));
+		writer->WriteString(meshResId.AsString());
+		writer->EndTag();
+
+		writer->BeginTag("PrimitiveGroupIndex", FourCC('PGRI'));
+		writer->WriteInt(primGroupIndex);
+		writer->EndTag();
+		return true;	
+	}	
+
+	return false;
+}
+#endif
+
 } // namespace Models

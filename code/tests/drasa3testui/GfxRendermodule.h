@@ -33,13 +33,14 @@ public:
 	/// called per-frame (processes input events)
 	virtual void OnFrame();
 	/// send input events to visible layouts
-	void SendInputEvents(const Util::Array<Input::InputEvent>& inputEvents);
+	void SendInputEvents(const Util::Array<GFxMouseEvent>& inputEvents);
 
 private:
     //Ptr<UIManager> uiManager;
     //Ptr<UIRenderer> uiRenderer;
-	Util::Array<Input::InputEvent> inputEvents;
-	Ptr<ScaleForms::ProcessEvents> processEventsMsg;
+	//Util::Array<Input::InputEvent> inputEvents;
+	Util::Array<GFxMouseEvent> inputEvents;
+	//Ptr<ScaleForms::ProcessEvents> processEventsMsg;
 	Math::float2 mousePosition;
 };
 

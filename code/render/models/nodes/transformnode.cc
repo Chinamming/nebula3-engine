@@ -130,4 +130,69 @@ TransformNode::OnAttachToModel(const Ptr<Model>& model)
         }        
     }
 }
+
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool 
+TransformNode::WriteDataTag(Ptr<ModelWriter>& writer)
+{
+	if(ModelNode::WriteDataTag(writer))
+	{
+		// setposition
+		if( this->position != Math::vector(0,0,0))
+		{
+			writer->BeginTag("Position", FourCC('POSI'));
+			writer->WriteFloat4(this->position);
+			writer->EndTag();
+		}			
+
+		// rotation
+		if( this->rotate != Math::float4(0,0,0,1))
+		{
+			writer->BeginTag("Rotation", FourCC('ROTN'));
+			writer->WriteFloat4(Math::float4(rotate.x(),rotate.y(),rotate.z(),rotate.w()));
+			writer->EndTag();
+		}			
+
+		// scale
+		if( this->scale != Math::vector(1,1,1))
+		{
+			writer->BeginTag("Scale", FourCC('SCAL'));
+			writer->WriteFloat4(this->scale);
+			writer->EndTag();
+		}
+		
+
+		//writer->BeginTag("RotatePivot", FourCC('RPIV'));
+		//writer->WriteFloat4(this->rotatePivot);
+		//writer->EndTag();
+
+		//writer->BeginTag("ScalePivot", FourCC('SPIV'));
+		//writer->WriteFloat4(this->scalePivot);
+		//writer->EndTag();
+
+		//writer->BeginTag("RelativeToViewSpace", FourCC('SVSP')); 
+		//writer->WriteBool(isInViewSpace);
+		//writer->EndTag();
+
+		//writer->BeginTag("LockViewer", FourCC('SLKV')); 
+		//writer->WriteBool(lockedToViewer);
+		//writer->EndTag();
+
+		//writer->BeginTag("MinDistance", FourCC('SMID')); 
+		//writer->WriteFloat(minDistance);
+		//writer->EndTag();
+
+		//writer->BeginTag("MaxDistance", FourCC('SMAD')); 
+		//writer->WriteFloat(maxDistance);
+		//writer->EndTag();
+
+		return true;
+	}		
+
+	return false;		
+}
+#endif
 } // namespace Models

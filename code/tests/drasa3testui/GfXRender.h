@@ -37,10 +37,10 @@ public:
 	/// render SUI system, may be called several times per frame
 	void Render(const Ptr<Frame::FrameBatch>& frameBatch);
 	/// process input events on all visible layout
-	bool ProcessInputEvents(const Util::Array<Input::InputEvent>& inputEvents);
+	bool ProcessInputEvents(const Util::Array<GFxMouseEvent>& inputEvents);
 
 private:
-	GFxTutorial* gfxTutorial;
+	Ptr<GFxTutorial> gfxTutorial;
 	IDirect3DStateBlock9*	pStateBlock;
 	bool isValid;
 };

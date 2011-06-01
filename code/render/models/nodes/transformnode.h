@@ -31,6 +31,11 @@ public:
     /// get overall state of contained resources (Initial, Loaded, Pending, Failed, Cancelled)
     virtual Resources::Resource::State GetResourceState() const;
 
+#if NEBULA3_EDITOR
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
+
     /// set position
     void SetPosition(const Math::point& p);
     /// get position

@@ -11,7 +11,11 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
-#define _WIN32_WINNT 0x500
+#define _WIN32_WINNT 0x501
+
+#if NEBULA3_EDITOR
+#include "mfcconfig.h"
+#endif 
 
 #define NOGDICAPMASKS
 #define OEMRESOURCE
@@ -41,11 +45,15 @@
 #include <winsock2.h>
 #include <rpc.h>
 #include <dbghelp.h>
-//#include <intrin.h>
+#include <intrin.h>
 
 // compile xna-math with sse/sse2 support for win32, to disable
 // it and run completely in floating point unit, uncomment the following line 
-// #define _XM_NO_INTRINSICS_ 
+#if NEBULA3_EDITOR
+    #define _XM_NO_INTRINSICS_ 
+	//#define _XM_SSE_INTRINSICS_
+	//#define XM_NO_ALIGNMENT
+#endif
 #include <xnamath.h>
 
 // crt headers
@@ -62,8 +70,8 @@
 #include <d3dx9.h>
 #include <dxerr.h>
 #include <xinput.h>
-//#include <xact3.h>
-//#include <xact3d3.h>
+#include <xact3.h>
+#include <xact3d3.h>
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 //------------------------------------------------------------------------------

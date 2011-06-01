@@ -8,7 +8,8 @@
 #include "util/array.h"
 #include "util/stringatom.h"
 #include "resources/resourceid.h"
-#include "input/inputevent.h"
+//#include "input/inputevent.h"
+#include "GfxEvent.h"
 
 //------------------------------------------------------------------------------
 namespace ScaleForms
@@ -23,17 +24,17 @@ public:
 	ProcessEvents() 
 	{ };
 public:
-	void SetInputEvents(const Util::Array<Input::InputEvent>& val)
+	void SetInputEvents(const Util::Array<GFxMouseEvent>& val)
 	{
 		n_assert(!this->handled);
 		this->inputevents = val;
 	};
-	const Util::Array<Input::InputEvent>& GetInputEvents() const
+	const Util::Array<GFxMouseEvent>& GetInputEvents() const
 	{
 		return this->inputevents;
 	};
 private:
-	Util::Array<Input::InputEvent> inputevents;
+	Util::Array<GFxMouseEvent> inputevents;
 };
 
 }

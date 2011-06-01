@@ -290,4 +290,22 @@ ModelNode::LookupChild(const StringAtom& name) const
     return this->children[this->childIndexMap[name]];
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool 
+ModelNode::WriteDataTag(Ptr<ModelWriter>& writer)
+{
+	// bounding box
+	writer->BeginTag("LocalBox", FourCC('LBOX'));
+	writer->WriteFloat4(boundingBox.center());
+	writer->WriteFloat4(boundingBox.extents());
+	writer->EndTag();
+
+	// string attribute		
+	return true;
+}
+#endif
+
 } // namespace Models

@@ -47,10 +47,6 @@ private:
     void BeginModelNode(const Ptr<Model>& model, const Util::FourCC& classFourCC, const Util::StringAtom& name);
     /// end loading current ModelNode
     void EndModelNode();
-	/// setup models from n3 file in memory
-	bool SetupMeshFromN3(const Ptr<IO::Stream>& stream);
-	/// setup models from dae file in memory
-	bool SetupMeshFromDae(const Ptr<IO::Stream>& stream);
 
     Ptr<IO::ReadStream> readStreamMsg;
     Util::Stack<Ptr<ModelNode> > modelNodeStack;

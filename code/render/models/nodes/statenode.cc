@@ -304,4 +304,70 @@ StateNode::AddShaderParam(const Util::String& paramName, const Util::Variant& pa
     this->shaderParams.Append(shaderParam);
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool
+StateNode::WriteDataTag(Ptr<ModelWriter>& writer)
+{
+	if(TransformNode::WriteDataTag(writer))
+	{
+		// shader
+		writer->BeginTag("Shader", FourCC('SHDR'));
+		writer->WriteString(this->shaderResId.AsString());
+		writer->EndTag();
+
+		// model node type
+		writer->BeginTag("ModelNodeType", FourCC('MNTP'));
+		writer->WriteString(ModelNodeType::ToName(type).AsString());
+		writer->EndTag();
+
+		for (IndexT index = 0; index < this->shaderParams.Size();index++ )
+		{
+			Variant& var = this->shaderParams[index].Value();
+			if( var.GetType() == Variant::Int)
+			{
+				// Int
+				writer->BeginTag("ShaderInt", FourCC('SINT'));
+				writer->WriteString(this->shaderParams[index].Key().AsString());
+				writer->WriteInt(var.GetInt());
+				writer->EndTag();
+			}
+			else if( var.GetType() == Variant::Float)
+			{
+				writer->BeginTag("ShaderFloat", FourCC('SFLT'));
+				writer->WriteString(this->shaderParams[index].Key().AsString());
+				writer->WriteFloat(var.GetFloat());
+				writer->EndTag();
+			}
+			else if( var.GetType() == Variant::Float4)
+			{
+				writer->BeginTag("ShaderVector", FourCC('SVEC'));
+				writer->WriteString(this->shaderParams[index].Key().AsString());
+				writer->WriteFloat4(var.GetFloat4());
+				writer->EndTag();
+			}
+			else if( var.GetType() == Variant::String)
+			{
+				writer->BeginTag("ShaderTexture", FourCC('STXT'));
+				writer->WriteString(this->shaderParams[index].Key().AsString());
+
+				String textureName = var.GetString();
+				textureName.StripFileExtension();
+				writer->WriteString(textureName);
+				writer->EndTag();
+			}
+			else
+			{
+
+			}
+		}
+		return true;
+	}
+
+	return false;
+}
+#endif
+
 } // namespace Models
