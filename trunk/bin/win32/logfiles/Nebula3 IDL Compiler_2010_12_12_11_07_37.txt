@@ -1,2 +1,0 @@
-Compiling 'file:///../foundation/http/httpprotocol.nidl'
-Compiling 'file:///../foundation/io/iointerfaceprotocol.nidl'
