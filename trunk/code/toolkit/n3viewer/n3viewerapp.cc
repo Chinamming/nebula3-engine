@@ -5,6 +5,7 @@
 #include "stdneb.h"
 #include "n3viewerapp.h"
 #include "system/win32/win32registry.h"
+#include "input/keyboard.h"
 
 namespace Toolkit
 {
@@ -15,6 +16,7 @@ using namespace Remote;
 using namespace Graphics;
 using namespace Math;
 using namespace System;
+using namespace Input;
 
 __ImplementSingleton(Toolkit::N3ViewerApp);
 
@@ -132,6 +134,34 @@ N3ViewerApp::OnProcessInput()
     this->remoteControlProxy->HandlePendingRequests();
     this->remoteControlProxy->HandlePendingCommands();
 
+	InputServer* inputServer = InputServer::Instance();
+	const Ptr<Keyboard>& keyboard = inputServer->GetDefaultKeyboard();
+
+	if( keyboard->KeyPressed(Key::F1))
+	{
+		Ptr<Debug::RenderDebugView> msg = Debug::RenderDebugView::Create();
+		msg->SetEnableDebugRendering(true);
+		GraphicsInterface::Instance()->Send(msg.cast<Messaging::Message>());
+	}
+	else if( keyboard->KeyPressed(Key::F2))
+	{
+		this->LoadAnimation(this->args.GetString("-view"),"animatior_clip");
+	}
+	else if( keyboard->KeyPressed(Key::F3))
+	{
+		static bool isload = false;
+		if(!isload)
+		{
+			this->LoadSkin(this->args.GetString("-view"),"skinNode");
+			isload = true;
+		}
+		else
+		{
+			this->RemoveSkin(this->args.GetString("-view"),"skinNode");
+			isload = false;
+		}
+	}
+
     ViewerApplication::OnProcessInput();
 }
 
@@ -160,6 +190,11 @@ N3ViewerApp::SetupSceneFromCmdLineArgs()
     if (this->args.HasArg("-view"))
     {
         this->LoadModel(this->args.GetString("-view"));
+
+		if (this->args.HasArg("-anim"))
+		{
+			//this->LoadAnimation(this->args.GetString("-view"),this->args.GetString("-anim"));
+		}
     }
 }
 

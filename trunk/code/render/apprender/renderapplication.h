@@ -54,6 +54,7 @@ public:
     virtual void Run();
 
 private:
+public:
     /// update the current time values
     void UpdateTime();
 

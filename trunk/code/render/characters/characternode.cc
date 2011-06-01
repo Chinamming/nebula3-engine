@@ -266,4 +266,78 @@ CharacterNode::ParseDataTag(const FourCC& fourCC, const Ptr<BinaryReader>& reade
     return retval;
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool
+CharacterNode::WriteDataTag(Ptr<Models::ModelWriter>& writer)
+{
+	if(TransformNode::WriteDataTag(writer))
+	{
+		if( animResId.IsValid())
+		{
+			writer->BeginTag("Animation", FourCC('ANIM'));
+			writer->WriteString(this->animResId.AsString());
+			writer->EndTag();
+		}		
+
+		if( variationResId.IsValid())
+		{
+			writer->BeginTag("Variation", FourCC('VART'));
+			writer->WriteString(this->variationResId.AsString());
+			writer->EndTag();
+		}		
+
+
+
+		//for (IndexT index = 0 ; index < this->jointArray.Size();index++ )
+		//{
+		//	writer->BeginTag("Joint", 'JONT');
+		//	writer->WriteInt(this->jointArray[index].jointIndex);
+		//	writer->WriteInt(this->jointArray[index].parentJointIndex);
+		//	writer->WriteFloat4(this->jointArray[index].poseTranslation);
+		//	writer->WriteFloat4(this->jointArray[index].poseRotation);
+		//	writer->WriteFloat4(this->jointArray[index].poseScale);
+		//	writer->WriteString(this->jointArray[index].jointName);
+		//	writer->EndTag();
+		//}
+
+		const Util::Array<CharacterJoint>& jointList = this->jointMaps.ValuesAsArray();
+		if( !jointList.IsEmpty())
+		{
+			writer->BeginTag("NumJoints", 'NJNT');
+			writer->WriteInt(jointList.Size());
+			writer->EndTag();
+
+
+			for (IndexT index=0; index < jointList.Size();index++ )
+			{
+				jointList[index].WriteDataTag(writer);
+			}/// end for
+		}
+
+		if( !skinList.IsEmpty())
+		{
+			writer->BeginTag("NumSkinLists", 'NSKL');
+			writer->WriteInt(1);
+			writer->EndTag();
+
+			writer->BeginTag("SkinList", 'SKNL');
+			String skinName = this->GetName().AsString();
+			skinName.Append("_skin");
+			writer->WriteString(skinName);
+			writer->WriteInt( skinList.Size() );
+			for(int i = 0; i< skinList.Size(); i++ )
+			{
+				writer->WriteString( skinList[i] );
+			}/// end for
+			writer->EndTag();
+		}		
+	}
+
+	return false;
+}
+#endif
+
 } // namespace Characters

@@ -25,18 +25,18 @@ using namespace Math;
 // chase camera specific attributes
 namespace Attr
 {
-    DefineFloatWithDefault(CameraDistance, 'CADI', ReadWrite, 10.0f);
-    DefineFloatWithDefault(CameraMinDistance, 'CMID', ReadWrite, 1.0f);
-    DefineFloatWithDefault(CameraMaxDistance, 'CMAD', ReadWrite, 25.0f);
-    DefineFloatWithDefault(CameraDistanceStep, 'CDST', ReadWrite, 1.0f);
-    DefineFloat4WithDefault(CameraOffset, 'COFF', ReadWrite, Math::float4(0.0f, 1.5f, 0.0f,0.0f));
+    DefineFloatWithDefault(CameraDistance, 'CADI', ReadWrite, 1000.0f);
+    DefineFloatWithDefault(CameraMinDistance, 'CMID', ReadWrite, 500.0f);
+    DefineFloatWithDefault(CameraMaxDistance, 'CMAD', ReadWrite, 1200.0f);
+    DefineFloatWithDefault(CameraDistanceStep, 'CDST', ReadWrite, 100.0f);
+    DefineFloat4WithDefault(CameraOffset, 'COFF', ReadWrite, Math::float4(0.0f, 500.0f, 0.0f,0.0f));
     DefineFloatWithDefault(CameraLowStop, 'CLOS', ReadWrite, -90.0f);
     DefineFloatWithDefault(CameraHighStop, 'CHIS', ReadWrite, 90.0f);
-    DefineFloatWithDefault(CameraAngularVelocity, 'CAVE', ReadWrite, 5.0f);
+    DefineFloatWithDefault(CameraAngularVelocity, 'CAVE', ReadWrite, 50.0f);
     DefineFloatWithDefault(CameraLinearGain, 'CLIG', ReadWrite, -30.0f);
     DefineFloatWithDefault(CameraAngularGain, 'CANG', ReadWrite, -50.0f);
-    DefineFloatWithDefault(CameraDefaultTheta, 'CTHE', ReadWrite, n_deg2rad(-20.0f));    
-    DefineFloatWithDefault(CameraDefaultRho, 'CRHO', ReadWrite, n_deg2rad(10.0f));  
+    DefineFloatWithDefault(CameraDefaultTheta, 'CTHE', ReadWrite, n_deg2rad(-45.0f));    
+    DefineFloatWithDefault(CameraDefaultRho, 'CRHO', ReadWrite, n_deg2rad(45.0f));  
 };
 
 namespace GraphicsFeature
@@ -137,7 +137,7 @@ ChaseCameraProperty::OnRender()
     if (FocusManager::Instance()->GetCameraFocusEntity() == this->entity)
     {
         // update the camera
-        this->UpdateCamera(true);
+        this->UpdateCamera(false);
     }
 
     // important: call parent class

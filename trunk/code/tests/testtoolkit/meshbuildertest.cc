@@ -26,18 +26,13 @@ MeshBuilderTest::Run()
     this->Verify(meshBuilder.GetNumTriangles() == 0);
 
     // build a simple 3-sided pyramid
-    float4 coords[8];
-    coords[0].set(-1.0f, 1.0f,-1.0f, 1.0f);
-    coords[1].set( 1.0f, 1.0f,-1.0f, 1.0f);
-    coords[2].set( 1.0f, 1.0f, 1.0f, 1.0f);
-    coords[3].set(-1.0f, 1.0f, 1.0f, 1.0f);
-
-	coords[4].set(-1.0f, -1.0f, -1.0f, 1.0f);
-	coords[5].set( 1.0f, -1.0f, -1.0f, 1.0f);
-	coords[6].set( 1.0f, -1.0f,  1.0f, 1.0f);
-	coords[7].set(-1.0f, -1.0f,  1.0f, 0.0f);
+    float4 coords[4];
+    coords[0].set(0.0f, 1.0f, 0.0f, 1.0f);
+    coords[1].set(-1.0f, 0.0f, -1.0f, 1.0f);
+    coords[2].set(+1.0f, 0.0f, -1.0f, 1.0f);
+    coords[3].set(0.0f, 0.0f, +1.0f, 0.0f);
     IndexT i;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < 4; i++)
     {
         MeshBuilderVertex v;
         v.SetComponent(MeshBuilderVertex::CoordIndex, coords[i]);

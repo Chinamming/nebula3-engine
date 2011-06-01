@@ -48,7 +48,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions=""
 				Optimization="0"
-				AdditionalIncludeDirectories="..;../foundation;../render;../extlibs;../tests;../addons;../toolkit ;../extlibs/dom/include;../extlibs/dom/include/1.4"
+				AdditionalIncludeDirectories="..;../foundation;../render;../extlibs;../tests;../addons;../toolkit ;"
 				PreprocessorDefinitions="__WIN32__;WIN32;_DEBUG;NT_PLUGIN;_HAS_EXCEPTIONS=0;"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -64,13 +64,12 @@
 				PrecompiledHeaderThrough="stdneb.h"
 				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
-				WarnAsError="false"
+				WarnAsError="true"
 				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				CallingConvention="0"
 				CompileAs="0"
-				DisableSpecificWarnings="4819"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -960,14 +959,6 @@
 				</File>
 				<File
 					RelativePath="..\toolkit\toolkitutil/meshutil\meshbuildergroup.h"
-					>
-				</File>
-				<File
-					RelativePath="..\toolkit\toolkitutil\meshutil\meshbuildersaver.cc"
-					>
-				</File>
-				<File
-					RelativePath="..\toolkit\toolkitutil\meshutil\meshbuildersaver.h"
 					>
 				</File>
 				<File

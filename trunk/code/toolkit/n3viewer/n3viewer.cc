@@ -16,14 +16,14 @@ using namespace Toolkit;
 void
 NebulaMain(const CommandLineArgs& args)
 {
-    N3ViewerApp app;
-    app.SetCompanyName("Radon Labs GmbH");
-    app.SetAppTitle("N3Viewer");
-    app.SetCmdLineArgs(args);
-    if (app.Open())
-    {
-        app.Run();
-        app.Close();
-    }
-    app.Exit();
+	N3ViewerApp app;
+	app.SetCompanyName("Radon Labs GmbH");
+	app.SetAppTitle("N3Viewer");
+	app.SetCmdLineArgs(args);
+	if (app.Open())
+	{
+		app.Run();
+		app.Close();
+	}
+	app.Exit();
 }

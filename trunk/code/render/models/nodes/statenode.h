@@ -50,6 +50,11 @@ public:
     /// get shaderparams
     const Util::Array<Util::KeyValuePair<Util::StringAtom, Util::Variant> >& GetShaderParameter() const;
 
+#if NEBULA3_EDITOR
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<ModelWriter>& writer);
+#endif
+
 protected:
     /// setup a new managed texture variable
     void SetupManagedTextureVariable(const Resources::ResourceId& texResId, const Ptr<CoreGraphics::ShaderVariable>& var);

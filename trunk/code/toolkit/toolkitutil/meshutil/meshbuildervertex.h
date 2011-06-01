@@ -101,10 +101,15 @@ public:
     /// transform the vertex
     void Transform(const Math::matrix44& m);
 
+	void SetOrigIndex(IndexT index){ this->origIndex = index;}
+
+	IndexT GetOrigIndex() const { return this->origIndex;}
+
 private:
     ComponentMask compMask;
     FlagMask flagMask;
     Math::float4 comps[NumComponents];
+	IndexT origIndex;
 };
 
 //------------------------------------------------------------------------------

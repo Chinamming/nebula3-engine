@@ -15,6 +15,10 @@
 #include "coreanimation/animresource.h"
 #include "coreanimation/managedanimresource.h"
 
+#if NEBULA3_EDITOR
+#include "COLLADAFWUniqueId.h"
+#endif
+
 //------------------------------------------------------------------------------
 namespace Characters
 {
@@ -54,6 +58,25 @@ public:
     /// get the character's animation resource
     const Resources::ResourceId& GetAnimationResourceId() const;
 
+#if NEBULA3_EDITOR
+	/// Set tje character's animation variation res
+	void SetVariationResourceId(const Util::String& resId);
+	/// add SkinList 
+	void AddSkin(const Util::String& skinNodename);
+	/// add joint
+	void AddJoint(const COLLADAFW::UniqueId uniqueId,const CharacterJoint& joint);
+	/// get joint
+	CharacterJoint& GetJoint(const COLLADAFW::UniqueId& uniqueId);
+	/// has joint by uniqueID
+	bool HasJoint(const COLLADAFW::UniqueId& uniqueId);
+	/// get joint num
+	SizeT NumJoint() const;
+	/// get joint indices
+	Util::Array<IndexT> GetJointIndices();
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<Models::ModelWriter>& writer);
+#endif
+
 private:
     /// recursively create model node instance and child model node instances
     virtual Ptr<Models::ModelNodeInstance> RecurseCreateNodeInstanceHierarchy(const Ptr<Models::ModelInstance>& modelInst, const Ptr<Models::ModelNodeInstance>& parentNodeInst=0);
@@ -63,6 +86,11 @@ private:
     Ptr<Character> character;
     Ptr<CoreAnimation::ManagedAnimResource> managedAnimResource;
     Ptr<CoreAnimation::ManagedAnimResource> managedVariationResource;
+
+#if NEBULA3_EDITOR
+	Util::Array<Util::String> skinList;
+	Util::Dictionary<COLLADAFW::UniqueId,Characters::CharacterJoint> jointMaps;
+#endif
 };
 
 //------------------------------------------------------------------------------
@@ -100,6 +128,69 @@ CharacterNode::GetManagedAnimResource() const
 {
     return this->managedAnimResource;
 }
+
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+inline void
+CharacterNode::AddSkin(const Util::String& skinNodename)
+{
+	this->skinList.Append(skinNodename);
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+inline void
+CharacterNode::AddJoint(const COLLADAFW::UniqueId uniqueId,const CharacterJoint& joint)
+{
+	this->jointMaps.Add(uniqueId,joint);
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+inline CharacterJoint& 
+CharacterNode::GetJoint(const COLLADAFW::UniqueId& uniqueId)
+{	
+	return this->jointMaps[uniqueId];
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+inline bool
+CharacterNode::HasJoint(const COLLADAFW::UniqueId& uniqueId)
+{	
+	return this->jointMaps.Contains(uniqueId);
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+inline SizeT 
+CharacterNode::NumJoint() const
+{
+	return this->jointMaps.Size();
+}
+
+//------------------------------------------------------------------------------
+/**
+*/
+inline
+Util::Array<IndexT> 
+CharacterNode::GetJointIndices()
+{
+	Util::Array<IndexT> jointIndices;
+	Util::Array<Characters::CharacterJoint> joints = this->jointMaps.ValuesAsArray();
+	for (IndexT index=0; index< joints.Size();index++)
+	{
+		jointIndices.Append(joints[index].GetJointIndex());
+	}
+	return jointIndices;
+}
+#endif
 
 } // namespace Characters
 //------------------------------------------------------------------------------

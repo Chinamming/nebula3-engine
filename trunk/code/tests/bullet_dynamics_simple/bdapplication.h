@@ -31,7 +31,7 @@ class btThreadSupportInterface;
 #endif
 class btCollisionDispatcher;
 class btAxisSweep3;
-class btDbvtBroadphase;
+//class btDbvtBroadphase;
 class btDiscreteDynamicsWorld;
 class btBoxShape;
 class btMultiSphereShape;
@@ -71,8 +71,8 @@ private:
     /// destroy sample objects
     void DestroyPhysicsObjects();
     void DestroyRigidBody(btRigidBody **body);
-    btRigidBody* createRigidBodyBox(const Vectormath::Aos::Vector3 &boxSize, const float boxMass);
-    btRigidBody* createRigidBodySphere(const float radius, const float boxMass);
+    //btRigidBody* createRigidBodyBox(const Vectormath::Aos::Vector3 &boxSize, const float boxMass);
+    //btRigidBody* createRigidBodySphere(const float radius, const float boxMass);
     // reset all bodies to start position and state
     void ResetBodies();
     // generate box start transform by its index

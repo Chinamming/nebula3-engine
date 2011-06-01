@@ -10,7 +10,7 @@ class Window;
 
 class GfxParser : public  Core::RefCounted
 {
-	__DeclareClass(UIXmlParser);
+	__DeclareClass(GfxParser);
 public:
 	/// constructor
 	GfxParser();

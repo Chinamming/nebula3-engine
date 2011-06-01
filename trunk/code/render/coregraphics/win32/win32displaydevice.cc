@@ -113,76 +113,85 @@ Win32DisplayDevice::OpenWindow()
     this->hAccel = CreateAcceleratorTable(acc, 1);
 
     // initialize application icon
-    HICON icon = 0;
-    if (this->iconName.IsValid())
-    {
-        icon = LoadIcon(this->hInst, this->iconName.AsCharPtr());
-    }
-    // fallthrough if no custom icon defined, or loading custom icon failed
-    if (0 == icon)
-    {
-        icon = LoadIcon(NULL, IDI_APPLICATION);
-    }
+#if NEBULA3_EDITOR
+	DisplayMode adjMode = this->ComputeAdjustedWindowRect();
+	this->hWnd = (HWND) this->parentWindow;
+	this->displayMode.SetWidth(adjMode.GetWidth());
+	this->displayMode.SetHeight(adjMode.GetHeight());
+	this->displayMode.SetXPos(adjMode.GetXPos());
+	this->displayMode.SetYPos(adjMode.GetYPos());
+#else
+	HICON icon = 0;
+	if (this->iconName.IsValid())
+	{
+		icon = LoadIcon(this->hInst, this->iconName.AsCharPtr());
+	}
+	// fallthrough if no custom icon defined, or loading custom icon failed
+	if (0 == icon)
+	{
+		icon = LoadIcon(NULL, IDI_APPLICATION);
+	}
 
-    // register window class
-    WNDCLASSEX wndClass;
-    Memory::Clear(&wndClass, sizeof(wndClass));
-    wndClass.cbSize        = sizeof(wndClass);
-    wndClass.style         = CS_DBLCLKS;
-    wndClass.lpfnWndProc   = WinProc;
-    wndClass.cbClsExtra    = 0;
-    wndClass.cbWndExtra    = sizeof(void*);   // used to hold 'this' pointer
-    wndClass.hInstance     = this->hInst;
-    wndClass.hIcon         = icon;
-    wndClass.hCursor       = LoadCursor(NULL, IDC_ARROW);
-    wndClass.hbrBackground = (HBRUSH) GetStockObject(NULL_BRUSH);
-    wndClass.lpszMenuName  = NULL;
-    wndClass.lpszClassName = NEBULA3_WINDOW_CLASS;
-    wndClass.hIconSm       = NULL;
-    RegisterClassEx(&wndClass);
+	// register window class
+	WNDCLASSEX wndClass;
+	Memory::Clear(&wndClass, sizeof(wndClass));
+	wndClass.cbSize        = sizeof(wndClass);
+	wndClass.style         = CS_DBLCLKS;
+	wndClass.lpfnWndProc   = WinProc;
+	wndClass.cbClsExtra    = 0;
+	wndClass.cbWndExtra    = sizeof(void*);   // used to hold 'this' pointer
+	wndClass.hInstance     = this->hInst;
+	wndClass.hIcon         = icon;
+	wndClass.hCursor       = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hbrBackground = (HBRUSH) GetStockObject(NULL_BRUSH);
+	wndClass.lpszMenuName  = NULL;
+	wndClass.lpszClassName = NEBULA3_WINDOW_CLASS;
+	wndClass.hIconSm       = NULL;
+	RegisterClassEx(&wndClass);
 
-    // we may need to adjust window size so that the client area of 
-    // the window is of the requested size
-    DWORD windowStyle = this->windowedStyle;
-    if (0 != this->parentWindow)
-    {
-        windowStyle = this->childWindowStyle;
-    }
-    else if (this->fullscreen)
-    {
-        windowStyle = this->fullscreenStyle;
-    }
-    DisplayMode adjMode = this->ComputeAdjustedWindowRect();
-    HWND parentHwnd = (HWND) this->parentWindow;
+	// we may need to adjust window size so that the client area of 
+	// the window is of the requested size
+	DWORD windowStyle = this->windowedStyle;
+	if (0 != this->parentWindow)
+	{
+		windowStyle = this->childWindowStyle;
+	}
+	else if (this->fullscreen)
+	{
+		windowStyle = this->fullscreenStyle;
+	}
+	DisplayMode adjMode = this->ComputeAdjustedWindowRect();
+	HWND parentHwnd = (HWND) this->parentWindow;
 
-    // open window
-    this->hWnd = CreateWindow(NEBULA3_WINDOW_CLASS,                 // lpClassName
-                              this->windowTitle.AsCharPtr(),        // lpWindowName
-                              windowStyle,                          // dwStyle
-                              adjMode.GetXPos(),                    // x
-                              adjMode.GetYPos(),                    // y
-                              adjMode.GetWidth(),                   // nWidth
-                              adjMode.GetHeight(),                  // nHeight
-                              parentHwnd,                           // hWndParent
-                              NULL,                                 // hMenu
-                              this->hInst,                          // hInstance
-                              NULL);                                // lParam
-    n_assert(0 != this->hWnd);
+	// open window
+	this->hWnd = CreateWindow(NEBULA3_WINDOW_CLASS,                 // lpClassName
+		this->windowTitle.AsCharPtr(),        // lpWindowName
+		windowStyle,                          // dwStyle
+		adjMode.GetXPos(),                    // x
+		adjMode.GetYPos(),                    // y
+		adjMode.GetWidth(),                   // nWidth
+		adjMode.GetHeight(),                  // nHeight
+		parentHwnd,                           // hWndParent
+		NULL,                                 // hMenu
+		this->hInst,                          // hInstance
+		NULL);                                // lParam
+	n_assert(0 != this->hWnd);
 
-    // set topmost flag
-    if (this->IsAlwaysOnTop())
-    {
-        SetWindowPos(this->hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-    }
+	// set topmost flag
+	if (this->IsAlwaysOnTop())
+	{
+		SetWindowPos(this->hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+	}
 
-    // if we're in child-window mode, adjust the actually used display mode!
-    if (0 != this->parentWindow)
-    {
-        this->displayMode.SetWidth(adjMode.GetWidth());
-        this->displayMode.SetHeight(adjMode.GetHeight());
-        this->displayMode.SetXPos(adjMode.GetXPos());
-        this->displayMode.SetYPos(adjMode.GetYPos());
-    }
+	// if we're in child-window mode, adjust the actually used display mode!
+	if (0 != this->parentWindow)
+	{
+		this->displayMode.SetWidth(adjMode.GetWidth());
+		this->displayMode.SetHeight(adjMode.GetHeight());
+		this->displayMode.SetXPos(adjMode.GetXPos());
+		this->displayMode.SetYPos(adjMode.GetYPos());
+	}
+#endif
 
     return true;
 }
@@ -195,7 +204,7 @@ void
 Win32DisplayDevice::CloseWindow()
 {
     n_assert(0 != this->hInst);
-
+#if(NEBULA3_EDITOR ==0)
     // close the window (if not already happened), the window may
     // have been closed externally by Alt-F4 (for instance)
     if (0 != this->hWnd)
@@ -210,6 +219,7 @@ Win32DisplayDevice::CloseWindow()
         DestroyAcceleratorTable(this->hAccel);
         this->hAccel = 0;
     }
+#endif
 
     // unregister the window class
     UnregisterClass(NEBULA3_WINDOW_CLASS, this->hInst);

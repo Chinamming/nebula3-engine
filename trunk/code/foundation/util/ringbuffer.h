@@ -81,7 +81,7 @@ RingBuffer<TYPE>::Allocate(SizeT c)
     this->capacity = c;
     this->size = 0;
     this->baseIndex = 0;
-    this->headIndex = 0;
+    this->headIndex = 0;	
     this->elements = n_new_array(TYPE, c);
 }
 
@@ -97,7 +97,7 @@ RingBuffer<TYPE>::Delete()
     this->headIndex = 0;
     if (0 != this->elements)
     {
-        n_delete_array(this->elements);
+        n_delete_array(this->elements);		
         this->elements = 0;
     }
 }

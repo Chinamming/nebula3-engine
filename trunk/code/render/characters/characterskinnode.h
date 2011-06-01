@@ -28,6 +28,11 @@ public:
     /// apply state shared by all my ModelNodeInstances
     virtual void ApplySharedState(IndexT frameIndex);
 
+#if NEBULA3_EDITOR
+	// write data to stream
+	virtual bool WriteDataTag(Ptr<Models::ModelWriter>& writer);
+#endif
+
     /// reserve fragments (call before adding fragments)
     void ReserveFragments(SizeT numFragments);
     /// add a fragment (consisting of a mesh group index and a joint palette

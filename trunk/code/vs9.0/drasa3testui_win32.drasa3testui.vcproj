@@ -84,11 +84,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib winmm.lib libgrenderer_d3d9.lib libgfx.lib libjpeg.lib"
+				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib winmm.lib libgrenderer_d3d9.lib libgfx.lib libjpeg.lib"
 				OutputFile="..\..\bin\win32\drasa3testui.debug.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".\Win32\Debug;..\..\bin\win32;..\lib\win32_vc9_i386;&quot;C:\Program Files\Scaleform\GFx SDK 3.0\3rdParty\jpeg-6b\lib\Win32\Msvc90\Debug&quot;"
+				AdditionalLibraryDirectories=".\Win32\Debug;..\..\bin\win32;..\lib\win32_vc9_i386;..\..\lib\fmod\win32;&quot;C:\Program Files\Scaleform\GFx SDK 3.0\3rdParty\jpeg-6b\lib\Win32\Msvc90\Debug&quot;"
 				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\drasa3testui.debug.pdb"
@@ -754,58 +754,6 @@
 				RelativePath="..\tests\drasa3testui\drasa3testuiapplication.h"
 				>
 			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\FxPlayerLog.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxHandler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\Gfxprotocol.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\Gfxprotocol.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfXRender.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfXRender.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxRendermodule.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxRendermodule.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxRTPlugin.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GfxRTPlugin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GFxTutoria.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tests\drasa3testui\GFxTutorial.h"
-				>
-			</File>
 			<Filter
 				Name="ui"
 				Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc"
@@ -816,6 +764,70 @@
 				</File>
 				<File
 					RelativePath="..\tests\drasa3testui/ui\mainscreen.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="scaleform"
+				>
+				<File
+					RelativePath="..\tests\drasa3testui\FxPlayerLog.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxHandler.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxHandler.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\Gfxprotocol.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\Gfxprotocol.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfXRender.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfXRender.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxRendermodule.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxRendermodule.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxRTPlugin.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxRTPlugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxSysAlloc.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GfxSysAlloc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GFxTutoria.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\tests\drasa3testui\GFxTutorial.h"
 					>
 				</File>
 			</Filter>

@@ -9,9 +9,11 @@
 #include "math/quaternion.h"
 #include "input/keyboard.h"
 #include "input/gamepad.h"
-#include "Gfxprotocol.h"
+#include "GfxSysAlloc.h"
+#include "GfXRender.h"
 
-GFxSystem			gfxInit;
+GfxSysAlloc gfxAlloc;
+GFxSystem	gfxInit(&gfxAlloc);
 
 namespace Test
 {
@@ -22,6 +24,7 @@ using namespace Util;
 using namespace Timing;
 using namespace Debug;
 using namespace Input;
+using namespace ScaleForms;
 
 //------------------------------------------------------------------------------
 /**
@@ -134,58 +137,36 @@ Drasa3TestUiApplication::Open()
         IndexT i;
         bool createStatic = true;
         float spacing = 2.0f;
-        for (j = 0; j < 4; ++j)
+        for (j = 0; j < 1; ++j)
         {
-            for (i = 0; i < 4; ++i)
+            for (i = 0; i < 1; ++i)
             {
                 Ptr<ModelEntity> model = ModelEntity::Create();
-                float dir = (i % 2 ? -1.0f : 1.0f);
-                float x = (i+1) * spacing * dir - dir * 0.5f * spacing;
-                model->SetTransform(Math::matrix44::translation(x, 0.0, 2.0f * spacing * j));
-                if (createStatic)
-                {                                                                   
-                    model->SetResourceId(ResourceId("mdl:examples/tiger.n3"));  
-                    this->stage->AttachEntity(model.cast<GraphicsEntity>());
-                }
-                else
-                {                                                             
-                    model->SetResourceId(ResourceId("mdl:characters/mensch_m.n3"));
-                    this->stage->AttachEntity(model.cast<GraphicsEntity>());
-                
-                    // apply skin
-                    Ptr<Graphics::ApplySkinList> skinList = Graphics::ApplySkinList::Create();
-                    skinList->SetSkinList(StringAtom("mann_nackt"));
-                    model->SendMsg(skinList.cast<GraphicsEntityMessage>());
-      
-                    // play animation
-                    //Ptr<Graphics::AnimPlayLoop> playLoop = Graphics::AnimPlayLoop::Create();
-                    //playLoop->SetBlendPriority(0);
-                    //playLoop->SetBlendWeight(1.0f);
-                    //playLoop->SetTimeFactor(1.0f);
-                    //playLoop->SetStartTime(0);
-                    //playLoop->SetTimeOffset(0);
-                    //playLoop->SetFadeInTime(200);
-                    //playLoop->SetFadeOutTime(200);
-                    //playLoop->SetClipName(StringAtom("gehen_01"));
-                    //model->SendMsg(playLoop.cast<GraphicsEntityMessage>());
-                } 
-                // createStatic  = !createStatic;
+				model->SetTransform(Math::matrix44::translation(0.0f, 0.0f, 0.0f));
+				model->SetResourceId(ResourceId("mdl:examples/tiger.n3"));  
+				this->stage->AttachEntity(model.cast<GraphicsEntity>());
                 this->models.Append(model);  
             } 
         }                                           
 
+	    //this->uiManager = UI::UIManager::Create();
+	    //this->uiRenderer = UI::UIRenderer::Create();
+
 	    //this->uiRenderModule = UI::UIRenderModule::Create();
 	    //this->uiRenderModule->Setup();
+     //   //this->uiManager->Open();	
 
      //   this->mainWindow = UI::MainScreen::Create();
-     //   this->mainWindow->SetResource("mainscreen.xml");
+     //   this->mainWindow->SetResource("mainscreen");
      //   this->mainWindow->Open();
 
 		this->gfxRenderModule = ScaleForms::GfxRenderModule::Create();
-		this->gfxRenderModule->Setup();
+		this->gfxRenderModule->Setup();		
 
         // wait for resources to be loaded
         GraphicsInterface::Instance()->WaitForPendingResources();
+
+		
                                       
         return true;
     }
@@ -224,11 +205,15 @@ Drasa3TestUiApplication::Close()
     }
     this->models.Clear();
 
+    //this->uiManager->Close();
+    //this->uiManager = 0;
     //this->uiRenderModule->Discard();
     //this->uiRenderModule = 0;
 
 	this->gfxRenderModule->Discard();
 	this->gfxRenderModule = 0;
+
+    ViewerApplication::Close();
 }
 
 //------------------------------------------------------------------------------
@@ -238,7 +223,7 @@ void
 Drasa3TestUiApplication::OnConfigureDisplay()
 {
     ViewerApplication::OnConfigureDisplay();
-    //this->display->SetVerticalSyncEnabled(true);
+    this->display->Settings().SetVerticalSyncEnabled(true);
 }
 
 //------------------------------------------------------------------------------
@@ -247,10 +232,11 @@ Drasa3TestUiApplication::OnConfigureDisplay()
 void
 Drasa3TestUiApplication::OnProcessInput()
 {
+	this->gfxRenderModule->OnFrame();
+
     const Ptr<Keyboard>& kbd = InputServer::Instance()->GetDefaultKeyboard();
     const Ptr<GamePad>& gamePad = InputServer::Instance()->GetDefaultGamePad(0);
-
-  
+    
     // enable/disable debug view
     if (kbd->KeyDown(Key::F4) || gamePad.isvalid() && gamePad->ButtonDown(GamePad::XButton))
     {
@@ -359,19 +345,31 @@ void
 Drasa3TestUiApplication::UpdateGUI()
 {
     // update time in ui system
-    Timing::Time time = FrameSync::FrameSyncTimer::Instance()->GetTime();
-
-	//Ptr<UI::UIManager> uiManager = UI::UIManager::Instance();
-	//Ptr<UI::UIRenderer> uiRenderer = UI::UIRenderer::Instance();
-	//uiManager->SetTime(time);
+ //   Timing::Time time = FrameSync::FrameSyncTimer::Instance()->GetTime();
+	//this->uiManager->SetTime(time);
 
  //   // trigger ui
- //   uiManager->Trigger();
-	//uiManager->Render();
+ //   this->uiManager->Trigger();
+	//this->uiManager->Render();
  //   if (this->renderDebug)
  //   {
- //       uiManager->RenderDebug();
- //   }
+ //       this->uiManager->RenderDebug();
+ //   }       
+
+	// now render the stuff	
+	//this->uiRenderer->OnFrame();
+
+	// update time in ui system
+	//Timing::Time time = FrameSync::FrameSyncTimer::Instance()->GetTime();
+	//UI::UIManager* uiManager = UI::UIManager::Instance();
+
+	//// trigger ui
+	//uiManager->SetTime(time);
+	//uiManager->Trigger();
+	//uiManager->Render();
+
+	//// now render the stuff	
+	//UI::UIRenderer::Instance()->OnFrame();	
 }
 
 //------------------------------------------------------------------------------
@@ -434,28 +432,28 @@ Drasa3TestUiApplication::OnUpdateFrame()
         m.translate(t);
         this->pointLights[i]->SetTransform(m);        
     }
-    const Math::matrix44& firstOne = this->models[0]->GetTransform();
-    if (firstOne.get_position().z() > 30.0f
-        || firstOne.get_position().z() < -30.0f)
-    {
-        direction *= -1;
-    }
+    //const Math::matrix44& firstOne = this->models[0]->GetTransform();
+    //if (firstOne.get_position().z() > 30.0f
+    //    || firstOne.get_position().z() < -30.0f)
+    //{
+    //    direction *= -1;
+    //}
     const Math::matrix44& lastOne = this->models.Back()->GetTransform();
     // update shadow point of interest
-    Ptr<Graphics::SetShadowPointOfInterest> poiMsg = Graphics::SetShadowPointOfInterest::Create();
-    poiMsg->SetPoi((firstOne.get_position() + lastOne.get_position()) * 0.5f);
-    GraphicsInterface::Instance()->SendBatched(poiMsg.cast<Messaging::Message>());
+    //Ptr<Graphics::SetShadowPointOfInterest> poiMsg = Graphics::SetShadowPointOfInterest::Create();
+    //poiMsg->SetPoi((firstOne.get_position() + lastOne.get_position()) * 0.5f);
+    //GraphicsInterface::Instance()->SendBatched(poiMsg.cast<Messaging::Message>());
 
-    for (i = 0; i < this->models.Size(); i++)
-    {
-        //const Math::matrix44& m = this->models[i]->GetTransform();           
-        //Math::float4 t(0.0f, 0.0f, 1.2f * (float)frameTime * direction, 0.0f);
-        //Math::float4 newPos = m.get_position() + t;
-        //           
-        //// rotate always in move direction
-        //Math::matrix44 newTrans = Math::matrix44::lookatrh(newPos, newPos + t, Math::vector::upvec());        
-        //this->models[i]->SetTransform(newTrans);        
-    }
+    //for (i = 0; i < this->models.Size(); i++)
+    //{
+    //    const Math::matrix44& m = this->models[i]->GetTransform();           
+    //    Math::float4 t(0.0f, 0.0f, 1.2f * (float)frameTime * direction, 0.0f);
+    //    Math::float4 newPos = m.get_position() + t;
+    //               
+    //    // rotate always in move direction
+    //    Math::matrix44 newTrans = Math::matrix44::lookatrh(newPos, newPos + t, Math::vector::upvec());        
+    //    this->models[i]->SetTransform(newTrans);        
+    //}
 
     // rotate spotlights
     for (i = 0; i < this->spotLights.Size(); i++)

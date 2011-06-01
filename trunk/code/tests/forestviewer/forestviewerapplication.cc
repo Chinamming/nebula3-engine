@@ -21,6 +21,7 @@ using namespace Timing;
 using namespace Debug;
 using namespace Input;
 using namespace Forest;
+using namespace Terrain;
 
 //------------------------------------------------------------------------------
 /**
@@ -57,6 +58,8 @@ ForestViewerApplication::Open()
         // create forest rendermodule
         this->forestModule = ForestRenderModule::Create();
         this->forestModule->Setup();
+		//this->terrainModule = TerrainRenderModule::Create();
+		//this->terrainModule->Setup();
 
         // setup lights
         this->SetupLights();
@@ -86,6 +89,8 @@ ForestViewerApplication::Close()
 
     this->forestModule->Discard();
     this->forestModule = 0;
+	//this->terrainModule->Discard();
+	//this->terrainModule = 0;
 
     ViewerApplication::Close();
 }
@@ -125,30 +130,30 @@ ForestViewerApplication::SetupGeometry()
     
     // setup models        
     this->ground = ModelEntity::Create();
-    this->ground->SetResourceId(ResourceId("mdl:examples/dummground.n3"));
+    this->ground->SetResourceId(ResourceId("mdl:examples/dummyground.n3"));
     this->ground->SetTransform(matrix44::translation(0.0f, 0.0f, 0.0f));
     this->stage->AttachEntity(ground.cast<GraphicsEntity>());
                    
-    IndexT j;
-    IndexT i;
-    float spacing = 5.0f;
-    for (j = 0; j < 4; ++j)
-    {
-        for (i = 0; i < 4; ++i)
-        {
-            Ptr<ModelEntity> model = ModelEntity::Create();
-            float dir = (i % 2 ? -1.0f : 1.0f);
-            float x = (i+1) * spacing * dir - dir * 0.5f * spacing;
-            model->SetTransform(matrix44::translation(x, 0.0, 2.0f * spacing * j));             
-            model->SetResourceId(ResourceId("mdl:examples/tiger_lod.n3"));  
-            this->stage->AttachEntity(model.cast<GraphicsEntity>());
-            this->models.Append(model);  
-        } 
-    }
+    //IndexT j;
+    //IndexT i;
+    //float spacing = 5.0f;
+    //for (j = 0; j < 4; ++j)
+    //{
+    //    for (i = 0; i < 4; ++i)
+    //    {
+    //        Ptr<ModelEntity> model = ModelEntity::Create();
+    //        float dir = (i % 2 ? -1.0f : 1.0f);
+    //        float x = (i+1) * spacing * dir - dir * 0.5f * spacing;
+    //        model->SetTransform(matrix44::translation(x, 0.0, 2.0f * spacing * j));             
+    //        model->SetResourceId(ResourceId("mdl:examples/tiger_lod.n3"));  
+    //        this->stage->AttachEntity(model.cast<GraphicsEntity>());
+    //        this->models.Append(model);  
+    //    } 
+    //}
 
     // load trees
 
-    // set the number of cells for the quadtree, depending on level size
+    //// set the number of cells for the quadtree, depending on level size
     Math::bbox box(point(0, 0, 0), vector(300, 300, 300));
     this->forestModule->LoadLevel(box);
 
@@ -170,12 +175,12 @@ ForestViewerApplication::DestroyGeometry()
     this->stage->RemoveEntity(this->ground.cast<GraphicsEntity>());
     this->ground = 0;   
     
-    int i;
-    for (i = 0; i < this->models.Size(); i++)
-    {
-        this->stage->RemoveEntity(this->models[i].cast<GraphicsEntity>());    	
-    }
-    this->models.Clear();
+    //int i;
+    //for (i = 0; i < this->models.Size(); i++)
+    //{
+    //    this->stage->RemoveEntity(this->models[i].cast<GraphicsEntity>());    	
+    //}
+    //this->models.Clear();
 
     // reset the tree module to delete all trees and the quadtree
     this->forestModule->ExitLevel();

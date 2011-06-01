@@ -49,6 +49,7 @@ using namespace FrameSync;
 using namespace Particles;
 using namespace Visibility;
 
+
 //------------------------------------------------------------------------------
 /**
 */
@@ -262,7 +263,7 @@ GraphicsHandler::SetupGraphicsRuntime(const Ptr<SetupGraphics>& msg)
     this->lightServer->Open();
     this->shadowServer->Open();    
     this->attachmentServer->Open();
-    this->particleServer->Open();    
+    this->particleServer->Open();  
 
     // HACK - pin placeholders and system stuff so they will not be automatically
     // removed or replaced on LOD-management

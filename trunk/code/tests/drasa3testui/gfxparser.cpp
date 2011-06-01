@@ -1,5 +1,5 @@
 #include "stdneb.h"
-#include "ui/uixmlparser.h"
+#include "gfxparser.h"
 
 
 namespace Scaleforms

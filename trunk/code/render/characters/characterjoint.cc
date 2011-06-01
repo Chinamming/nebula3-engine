@@ -62,4 +62,23 @@ CharacterJoint::Setup(IndexT parentIndex, const CharacterJoint* parent, const ve
     *this->invPoseMatrixPtr = matrix44::inverse(this->poseMatrix);
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool
+CharacterJoint::WriteDataTag(Ptr<Models::ModelWriter>& writer)
+{
+	writer->BeginTag("Joint", 'JONT');
+	writer->WriteInt(this->JointIndex);
+	writer->WriteInt(this->parentJointIndex);
+	writer->WriteFloat4(this->poseTranslation);
+	writer->WriteFloat4(Math::float4(this->poseRotation.x(),this->poseRotation.y(),this->poseRotation.z(),this->poseRotation.w()));
+	writer->WriteFloat4(this->poseScale);
+	writer->WriteString(this->name.AsString());
+	writer->EndTag();
+	return false;
+}
+#endif
+
 } // namespace Characters

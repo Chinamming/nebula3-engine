@@ -13,6 +13,7 @@
 #include "graphics/globallightentity.h"
 #include "graphics/pointlightentity.h"
 #include "forest/forestrendermodule.h"
+#include "forest/terrainrendermodule.h"
 
 //------------------------------------------------------------------------------
 namespace Tools
@@ -50,6 +51,7 @@ private:
     Ptr<Graphics::GlobalLightEntity> globalLight;
     Util::Array<Timing::Time> frameTimes;
     Ptr<Forest::ForestRenderModule> forestModule;
+	//Ptr<Terrain::TerrainRenderModule> terrainModule;
     Timing::Time avgFPS;
     bool benchmarkmode;
     bool renderDebug;

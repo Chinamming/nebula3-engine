@@ -12,13 +12,11 @@
 #include <MMSystem.h>
 #include <core/refcounted.h>
 
-//--------------------------------------------------------------------------------------
-// GFxTutorial Definition
-//--------------------------------------------------------------------------------------
-
-class GFxTutorial //: public Core::RefCounted
+namespace ScaleForms
 {
-	//__DeclareClass(GFxTutorial);
+class GFxTutorial : public Core::RefCounted
+{
+	__DeclareClass(GFxTutorial);
 public:
 	GFxTutorial();
 	~GFxTutorial();
@@ -33,7 +31,7 @@ public:
 	void SetTextboxFocus(bool f) { textboxHasFocus = f; }
 	void LogPrintf(const char *format, va_list al);
 
-	void ProcessEvent(const GFxEvent& mevent);
+	void ProcessEvent(const GFxMouseEvent& mevent);
 
 private:
 
@@ -54,10 +52,12 @@ private:
 	D3DPRESENT_PARAMETERS	presentParams;
 
 	// Movie frame time
+	//double MovieLastTime;
 	DWORD MovieLastTime;
 
 	// Textbox Focus
 	bool textboxHasFocus;
 };
+}
 
 #endif

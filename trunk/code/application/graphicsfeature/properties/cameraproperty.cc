@@ -82,7 +82,8 @@ CameraProperty::OnStart()
 {
     Property::OnStart();
 
-    if (this->entity->GetBool(Attr::CameraFocus))
+	/// default value is True
+    if ( this->entity->GetBool(Attr::CameraFocus) )
     {
         FocusManager::Instance()->SetCameraFocusEntity(this->entity);
     }

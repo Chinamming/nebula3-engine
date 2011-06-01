@@ -2,7 +2,7 @@
 //  particle.cc
 //  (C) 2009 Radon Labs GmbH
 //------------------------------------------------------------------------------
-
+#include "stdneb.h"
 #define __CELL_ASSERT__  (1)
 
 #include "jobs/stdjob.h"

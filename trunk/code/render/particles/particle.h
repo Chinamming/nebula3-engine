@@ -26,6 +26,7 @@ namespace Particles
     static const SizeT VerticesPerParticle = 4;
 #endif
 
+	NEBULA3_ALIGN16
     struct Particle
     {
         Math::float4 position;
@@ -48,6 +49,7 @@ namespace Particles
 
     // uniform data for particle system instances, used for job-uniform data as well,
     // so we dont have to copy that much
+	NEBULA3_ALIGN16
 	struct JobUniformData
 	{
         JobUniformData() : windVector(0.5f, 0.0f, 0.0f) {}
@@ -78,6 +80,7 @@ namespace Particles
 	};
 
     // each job-slice generates this output
+	NEBULA3_ALIGN16
     struct JobSliceOutputData
     {
         Math::float4 bboxMin;

@@ -89,12 +89,27 @@ JobsTestApplication::Close()
 void
 JobsTestApplication::Run()
 {
-    // uniform    
-	JobUniformData *un = n_new(JobUniformData);
-	Memory::Copy(uniform, un, sizeof(JobUniformData));
+    // uniform
+#if __PS3__
+    static const bool generateVertexList = false;
+    n_assert(sizeof(JobUniformData) == uniform_size_bytes);   
+    
+#endif
+    JobUniformData *un = n_new(JobUniformData);
+    Memory::Copy(uniform, un, sizeof(JobUniformData));
+#if __PS3__
+    un->generateVertexList = generateVertexList;
+#endif
     JobUniformDesc uniformDesc(un, sizeof(JobUniformData), 0);
+
     const int input_size_bytes = sizeof(Particle) * particleCount; 
+    
+#if __PS3__
+    const SizeT inputSliceSize = generateVertexList ? PARTICLE_JOB_INPUT_SLICE_SIZE__VSTREAM_ON :
+                                                      PARTICLE_JOB_INPUT_SLICE_SIZE__VSTREAM_OFF;
+#else
     const SizeT inputSliceSize = PARTICLE_JOB_INPUT_SLICE_SIZE__VSTREAM_OFF;
+#endif
     JobDataDesc inputDesc(particlesInput, input_size_bytes, inputSliceSize);
 
 
@@ -111,6 +126,20 @@ JobsTestApplication::Run()
     n_assert(sliceOutput);
     n_assert(!((int)sliceOutput & 0xF));
 
+#if __PS3__
+    unsigned char *vertexCache = NULL;
+    if(generateVertexList)
+    {
+        const SizeT vertexBufferSize = sliceCount * PARTICLE_JOB_PS3_OUTPUT_VBUFFER_SLICE_SIZE;
+        vertexCache = n_new_array(unsigned char, vertexBufferSize);
+        n_assert(vertexCache);
+        n_assert(vertexBufferSize > 0);
+        outputDesc = Jobs::JobDataDesc(particlesOutput, inputBufferSize, inputSliceSize,
+                                       sliceOutput, sizeof(JobSliceOutputData) * sliceCount, sizeof(JobSliceOutputData),
+                                       vertexCache, vertexBufferSize, PARTICLE_JOB_PS3_OUTPUT_VBUFFER_SLICE_SIZE);
+    }
+    else
+#endif
     {
         outputDesc = Jobs::JobDataDesc(particlesOutput, inputBufferSize, inputSliceSize,
                                        sliceOutput, sizeof(JobSliceOutputData) * sliceCount, sizeof(JobSliceOutputData));
@@ -119,7 +148,11 @@ JobsTestApplication::Run()
 
     ///////////////////////
     // setup job and run it
+    #if __PS3__
+    Jobs::JobFuncDesc jobFunc(_binary_jqjob_render_particlejob_ps3_bin_start, _binary_jqjob_render_particlejob_ps3_bin_size);
+    #else
     Jobs::JobFuncDesc jobFunc(ParticleJobFunc);
+    #endif
     this->job = Jobs::Job::Create();
     job->Setup(uniformDesc, inputDesc, outputDesc, jobFunc);
 
@@ -156,6 +189,13 @@ JobsTestApplication::Run()
     }
     n_delete_array(sliceOutput);
     sliceOutput = NULL;
+#if __PS3__
+    if(vertexCache)
+    {
+        n_delete_array(vertexCache);
+        vertexCache = NULL;
+    }
+#endif
 }
 
 } // namespace Test

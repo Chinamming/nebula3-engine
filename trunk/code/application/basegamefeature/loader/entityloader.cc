@@ -11,6 +11,7 @@
 #include "basegameattr/basegameattributes.h"
 #include "graphicsattr/graphicsattributes.h"
 #include "loader/loaderserver.h"
+#include "properties/cameraproperty.h"
 
 namespace BaseGameFeature
 {
@@ -55,7 +56,6 @@ EntityLoader::Load(const Util::Array<Util::String>& activeLayers)
                     {
                         // create entity through factory manager
                         Ptr<Entity> gameEntity = factoryManager->CreateEntityByCategory(category.GetName(), table, rowIndex);
-
                         // update progress indicator
                         this->UpdateProgressIndicator(gameEntity);
 

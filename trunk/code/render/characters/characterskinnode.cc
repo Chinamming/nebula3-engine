@@ -116,4 +116,31 @@ CharacterSkinNode::ApplySharedState(IndexT frameIndex)
     // node may render several skin fragments!
 }
 
+#if NEBULA3_EDITOR
+//------------------------------------------------------------------------------
+/**
+*/
+bool
+CharacterSkinNode::WriteDataTag(Ptr<Models::ModelWriter>& writer)
+{
+	if( ShapeNode::WriteDataTag(writer) )
+	{
+		writer->BeginTag("NumSkinFragments", 'NSKF');
+		writer->WriteInt(skinFragments.Size());
+		writer->EndTag();
+
+		for (IndexT index = 0 ; index < this->skinFragments.Size();index++ )
+		{
+			writer->BeginTag("SkinFragment", 'SFRG');
+			writer->WriteInt(this->skinFragments[index].primGroupIndex);
+			writer->WriteIntArray(this->skinFragments[index].jointPalette);
+			writer->EndTag();
+		}
+		return true;
+	}	
+
+	return false;
+}
+#endif
+
 } // namespace Characters

@@ -6,7 +6,7 @@
 
 namespace ScaleForms
 {
-	__ImplementClass(ScaleForms::ProcessEvents, 'SCPE', Messaging::Message);
+	__ImplementClass(ScaleForms::ProcessEvents, 'GFXE', Messaging::Message);
 	__ImplementMsgId(ProcessEvents);
 } // SUI
 

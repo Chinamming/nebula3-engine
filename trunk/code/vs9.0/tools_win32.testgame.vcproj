@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="testgame"
 	ProjectGUID="{8E51849C-AAC3-4880-A4AB-E744C3FC249D}"
-	TargetFrameworkVersion="0"
 	>
 	<Platforms>
 		<Platform
@@ -31,9 +30,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -85,23 +81,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.debug.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Debug,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.debug.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.debug.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.debug.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -111,9 +104,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -133,9 +123,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -165,9 +152,6 @@
 				EnableEnhancedInstructionSet="0"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdneb.h"
-				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
 				WarnAsError="true"
 				SuppressStartupBanner="true"
@@ -175,6 +159,9 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdneb.h"
+				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -190,23 +177,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Release,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -216,9 +200,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -238,9 +219,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -270,9 +248,6 @@
 				EnableEnhancedInstructionSet="0"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdneb.h"
-				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
 				WarnAsError="true"
 				SuppressStartupBanner="true"
@@ -280,6 +255,9 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdneb.h"
+				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -295,23 +273,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.programming.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Programming,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.programming.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.programming.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.programming.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -321,9 +296,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -343,9 +315,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -375,9 +344,6 @@
 				EnableEnhancedInstructionSet="0"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdneb.h"
-				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
 				WarnAsError="true"
 				SuppressStartupBanner="true"
@@ -385,6 +351,9 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdneb.h"
+				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -400,23 +369,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.public_build.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Public_Build,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.public_build.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.public_build.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.public_build.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -426,9 +392,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -448,9 +411,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -480,9 +440,6 @@
 				EnableEnhancedInstructionSet="0"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdneb.h"
-				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
 				WarnAsError="true"
 				SuppressStartupBanner="true"
@@ -490,6 +447,9 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdneb.h"
+				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -504,25 +464,22 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/export:SecuROM,@1"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.securom.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Securom,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.securom.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.securom.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.securom.map"
 				MapExports="true"
+				AdditionalOptions="/export:SecuROM,@1"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -532,9 +489,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -554,9 +508,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="Nebula3 Interface Definition"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -604,23 +555,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.maya_debug.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Maya_Debug,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.maya_debug.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.maya_debug.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.maya_debug.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -630,9 +578,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -654,9 +599,6 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
-				Name="Nebula3 Interface Definition"
-			/>
-			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -674,17 +616,17 @@
 				PreprocessorDefinitions="__MAYA__;__WIN32__;WIN32;NT_PLUGIN;_HAS_EXCEPTIONS=0;"
 				StringPooling="true"
 				ExceptionHandling="0"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdneb.h"
-				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 				WarningLevel="3"
 				WarnAsError="true"
 				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="false"
+				RuntimeTypeInfo="false"
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdneb.h"
+				PrecompiledHeaderFile="$(OutDir)\$(ProjectName).pch"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -700,23 +642,20 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dbghelp.lib dxguid.lib wsock32.lib rpcrt4.lib wininet.lib d3d9.lib d3dx9.lib dinput8.lib xinput.lib dxerr.lib x3daudio.lib ../../lib/fmod/win32/fmodex_vc.lib ../../lib/fmoddesignerapi/win32/fmod_event.lib ../../lib/fmoddesignerapi/win32/fmod_event_net.lib  "
-				OutputFile="..\..\bin\win32\testgame.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".\Win32\Maya_Release,..\..\bin\win32,..\lib\win32_vc9_i386;"
-				GenerateManifest="false"
+				OutputFile="..\..\bin\win32\testgame.exe"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\win32\testgame.pdb"
 				GenerateMapFile="true"
 				MapFileName="..\..\bin\win32\testgame.map"
 				MapExports="true"
 				TargetMachine="1"
+				GenerateManifest="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -728,9 +667,6 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -738,27 +674,6 @@
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="testgame"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc"
-			>
-			<File
-				RelativePath="..\res\nebula.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\tools\testgame\testgame.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tools\testgame\testgameapplication.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tools\testgame\testgameapplication.h"
-				>
-			</File>
-		</Filter>
 		<File
 			RelativePath="..\tools\stdneb.cc"
 			>
@@ -819,6 +734,23 @@
 				/>
 			</FileConfiguration>
 		</File>
+		<Filter
+			Name="testgame"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc"
+			>
+			<File
+				RelativePath="..\tools\testgame\testgame.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\tools\testgame\testgameapplication.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\tools\testgame\testgameapplication.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -17,7 +17,7 @@ MayaCameraUtil::MayaCameraUtil() :
     defaultCenterOfInterest(0.0f, 0.0f, 0.0f),
     defaultEyePos(0.0f, 0.0f, 10.0f),
     defaultUpVec(0.0f, 1.0f, 0.0f),
-    viewDistance(100.0f),
+    viewDistance(0.0f),
     centerOfInterest(0.0f, 0.0f, 0.0f),
     cameraTransform(matrix44::identity()),
     orbitButton(false),

@@ -2,6 +2,7 @@
 //  animjobsample.cc
 //  (C) 2009 Radon Labs GmbH
 //------------------------------------------------------------------------------
+#include "stdneb.h"
 #include "jobs/stdjob.h"
 #include "animjobutil.h"
 #include "coreanimation/animsamplemixinfo.h"
