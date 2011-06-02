@@ -67,7 +67,7 @@ inline unsigned long long    _byteswap_uint64(unsigned long long x)  { return ((
 #error "Unsupported platform!"
 #endif
 
-#if ( __MAYA__ /*|| NEBULA3_EDITOR*/ )
+#if (__MAYA__ || NEBULA3_EDITOR )
 #define ThreadLocal
 #elif __WIN32__
 #define ThreadLocal __declspec(thread)
