@@ -87,7 +87,7 @@ static const int JobMaxSliceSize = 0x3FFF;
 #define NEBULA3_USE_SERIAL_JOBSYSTEM (0)
 
 // enable/disable thread-local StringAtom tables
-#if (__WII__)
+#if (__WII__ || NEBULA3_EDITOR)
 #define NEBULA3_ENABLE_THREADLOCAL_STRINGATOM_TABLES (0)
 #else
 #define NEBULA3_ENABLE_THREADLOCAL_STRINGATOM_TABLES (1)
@@ -120,7 +120,7 @@ static const int JobMaxSliceSize = 0x3FFF;
 #endif
          
 // enable/disable the builtin HTTP server
-#if PUBLIC_BUILD || __WII_PROFILING__
+#if PUBLIC_BUILD || __WII_PROFILING__ || NEBULA3_EDITOR
 #define __NEBULA3_HTTP__ (0)
 #else
 #define __NEBULA3_HTTP__ (1)
@@ -128,7 +128,7 @@ static const int JobMaxSliceSize = 0x3FFF;
 
 // enable/disable the transparent web filesystem
 #if __WIN32__
-#define __NEBULA3_HTTP_FILESYSTEM__ (1)
+#define __NEBULA3_HTTP_FILESYSTEM__ (0)
 #else
 #define __NEBULA3_HTTP_FILESYSTEM__ (0)
 #endif
