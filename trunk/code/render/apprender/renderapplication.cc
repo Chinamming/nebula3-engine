@@ -113,13 +113,23 @@ RenderApplication::Open()
         this->gameContentServer->SetTitleId(this->GetAppID());
         this->gameContentServer->SetVersion(this->GetAppVersion());
         this->gameContentServer->Setup();
+		#if !NEBULA3_EDITOR
         this->ioServer = IoServer::Create();
         if (this->mountStandardArchivesEnabled)
         {
             this->ioServer->MountStandardArchives();
         }
+		#endif
         this->ioInterface = IoInterface::Create();
         this->ioInterface->Open();
+
+		#if NEBULA3_EDITOR
+		this->ioServer = IoServer::Instance();
+		if (this->mountStandardArchivesEnabled)
+		{
+			this->ioServer->MountStandardArchives();
+		}
+		#endif
 
         // attach a log file console handler
         #if __WIN32__
@@ -164,8 +174,12 @@ RenderApplication::Open()
         this->display->Open();
 
         // setup frame sync timer (must happen after graphics exists)
+		#if !NEBULA3_EDITOR
         this->frameSyncTimer = FrameSyncTimer::Create();
         this->frameSyncTimer->Setup();
+		#else
+		this->frameSyncTimer = FrameSyncTimer::Instance();
+		#endif
 
         // setup input subsystem
         this->inputServer = InputServer::Create();
@@ -301,8 +315,8 @@ RenderApplication::Close()
     this->gameContentServer->Discard();
     this->gameContentServer = 0;
 
-    this->frameSyncTimer->Discard();
-    this->frameSyncTimer = 0;
+    //this->frameSyncTimer->Discard();
+    //this->frameSyncTimer = 0;
 
     this->jobSystem->Discard();
     this->jobSystem = 0;

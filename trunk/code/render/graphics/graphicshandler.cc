@@ -98,27 +98,27 @@ GraphicsHandler::Open()
     this->frameSyncTimer->Setup();
 
     // setup core runtime
-    this->ioServer = IO::IoServer::Create();
+    this->ioServer = IO::IoServer::Instance();
 
-#if __NEBULA3_HTTP_FILESYSTEM__
-    // setup http client registry for shared HTTP connections
-    this->httpClientRegistry = Http::HttpClientRegistry::Create();
-    this->httpClientRegistry->Setup();
-#endif
+//#if __NEBULA3_HTTP_FILESYSTEM__
+//    // setup http client registry for shared HTTP connections
+//	this->httpClientRegistry = Http::HttpClientRegistry::Instance();
+//    //this->httpClientRegistry->Setup();
+//#endif
 
-#if __NEBULA3_HTTP__
-    // setup http page handlers
-    this->httpServerProxy = Http::HttpServerProxy::Create();
-    this->httpServerProxy->Open();
-    this->httpServerProxy->AttachRequestHandler(Debug::DisplayPageHandler::Create());
-    this->httpServerProxy->AttachRequestHandler(Debug::MeshPageHandler::Create());
-    this->httpServerProxy->AttachRequestHandler(Debug::ShaderPageHandler::Create());
-    this->httpServerProxy->AttachRequestHandler(Debug::TexturePageHandler::Create());
-    this->httpServerProxy->AttachRequestHandler(Debug::GraphicsPageHandler::Create());
-#if __WIN32__
-    this->httpServerProxy->AttachRequestHandler(Debug::StreamingTexturePageHandler::Create());
-#endif
-#endif
+//#if __NEBULA3_HTTP__
+//    // setup http page handlers
+//	this->httpServerProxy = Http::HttpServerProxy::Create();
+//    this->httpServerProxy->Open();
+//    this->httpServerProxy->AttachRequestHandler(Debug::DisplayPageHandler::Create());
+//    this->httpServerProxy->AttachRequestHandler(Debug::MeshPageHandler::Create());
+//    this->httpServerProxy->AttachRequestHandler(Debug::ShaderPageHandler::Create());
+//    this->httpServerProxy->AttachRequestHandler(Debug::TexturePageHandler::Create());
+//    this->httpServerProxy->AttachRequestHandler(Debug::GraphicsPageHandler::Create());
+//#if __WIN32__
+//    this->httpServerProxy->AttachRequestHandler(Debug::StreamingTexturePageHandler::Create());
+//#endif
+//#endif
 
     // setup the required objects, but do not open them, this will
     // happen at a later time when the SetupGrapics message is received
